@@ -1,0 +1,771 @@
+
+# Lab 7
+
+**Objective:** Welcome to Lab 7. In this lab, we are going to use real world data to perform a regression analysis exercise. We are also going to look at downloading census data using R.
+
++ To read in State Level census data from the tidycensus package
++ To subset to your city of choice
++ To test linear model assumptions. 
++ To perform correlation analysis. 
++ To examine model residuals. 
++ To perform a Spatial lag model and interpret the output
+ 
+**Data-sets:**  Data from the American Community Survey.
+
+**Lab structure:**  Now you are getting more experienced in R, I will provide a worked example then get you to do something similar on your own data. YOUR CHALLENGE IS VERY SIMILAR TO THE TUTORIAL, so I urge you to get everything working on your machine, then edit each code chunk as necessary.
+
+## Lab 7 Set-Up
+
+### Create your Lab 7 project file
+
+ - Open a new version of R-studio.  
+ - Click the file menu, then new project in a new directory.  
+ - Select your 364 directory, then name the project Lab 7.  
+
+If you are stuck on this process, see the start of previous labs.  You can check this has worked by looking on the file explorer on your computer, then selecting your GEOG364 folder and checking that a Lab 7 folder has appeared with your Lab7.Proj file inside it.
+
+### Create your NoteBook file
+
+Here you have a choice:
+
+Either.. you can create a standard lab script as before:
+
+ - Go to File/New File and create a new R-NOTEBOOK file.
+ - Delete the friendly text (everything from line 6 onward)
+ - Save your file as `GEOG364_Lab7_PSU.ID.Rmd` e.g. `GEOG364_Lab7_hlg5155.Rmd`
+ - Follow Section 2.2.2 to modify your YAML code 
+ - *Please make sure that your lab script has a floating table of contents* (section 2.2.2, adding the `toc_float: TRUE` part)
+
+Or..OPTIONAL: 
+
+If you want to explore some new formats, you can try one of the markdown templates stored in R.There are instructions on how to load them on the website here: https://github.com/juba/rmdformats/blob/master/README.md). 
+
+Again, make sure to save your file as `GEOG364_Lab7_PSU.ID.Rmd`. Please also add in a floating table of contents to your YAML code.
+
+### Style guide
+
+A large component of the marks for your labs scripts focuses them being easily readable and easy to follow.  Now you have had experience with R, here are some of the things we expect to get full marks:
+
+1. You include a floating table of contents, title and author in the YAML Code
+2. **You include a "level 1" heading in your text for every lab challenge e.g. `# Lab challenge 1`**
+3. It's easy to see where your answers are - so you have full sentences, not just one word answers.
+4. You have spell-checked your work!  The spell check button is between the save button and the knit/preview button.
+5. You include blank lines before and after each code chunk, or new paragraph, or bullet point set or heading (put many blank lines in markdown files and R can automatically format them correctly).
+6. Any written answers are thoughtful and well considered.
+
+As you write your lab, *regularly* click the Preview or Knit Button and make sure everything looks correct and properly formatted.  IF THERE ARE PROBLEMS, TALK TO AN INSTRUCTOR.
+
+
+### Download and run packages
+
+Follow the instructions in Section 3.2.2. to download and install the following packages, plus any others  that you are missing from the library code chunk. 
+
+ - `corrplot`
+ - `hrbrthemes`
+ - `olsrr`
+ - `plotly`
+ - `rmapshaper`
+ - `spatialreg`
+ - `spatialEco`
+ - `tidycensus`
+ - `tidyverse`
+ - `tigris`
+ - `units`
+
+Now add a new code chunk in your script.  Inside add the following code and run it.  
+
+*Hint: make a new code chunk and copy the text below into it. Save the script.  If you are missing packages, you might see a yellow bar pop up at the top of your script asking to install them - in that case just click install and it will automatically download them for you*
+
+```{r, message=FALSE}
+library(corrplot)
+library(hrbrthemes)
+library(olsrr)
+library(plotly)
+library(rmapshaper) 
+library(spatialreg)
+library(raster)
+library(spdep)
+library(sp)
+library(spatialEco)
+library(sf)
+library(tidycensus)
+library(tidyverse)
+library(tigris)
+library(tmap)
+library(units)
+```
+
+This needs to be at the top of your script because the library commands need to be run every time you open R.  Now click the Preview or Knit Button and make sure everything looks correct.  If you are not sure if there are errors, rerun the code chunk a few times, it should eventually run without any messages or output.
+
+*Don't continue until you can make and view your html or nb.html file. If it doesn't work, ask for help before moving on*
+
+
+### Sign up for Census API
+
+You can access census data within R, but you need to sign up in advance for a key. Do this now!
+
+https://api.census.gov/data/key_signup.html
+
+You can use Penn State as the organisation.  This is just you promising that you will follow the terms and conditions when using this data. The system will quickly send you an e-mail you with a personal access code/key.  Click the link in the e-mail to activate.
+
+Once the e-mail arrives, make a new code chunk in your lab script and add the following code, where you replace the YOUR_KEY_HERE with the passcode they send you (in quote marks).
+
+```{r, eval=FALSE}
+#tidycensus package
+census_api_key("YOUR API KEY GOES HERE", install=TRUE)
+```
+
+```{r, eval=FALSE, include=FALSE}
+census_api_key("d2a990f429205c51b54998ec57886c6cf01a7ef1", install=TRUE)
+```
+ 
+*Important!* this seems to get angry if run mulitple times, so if you have run it once and it's telling you that A census_api_key already exists, it's OK to comment out this line of code. 
+ 
+## Tutorial 1: Data Wrangling
+
+In this tutorial I will show you how to:
+
+ - Load census data from tidy-census
+ - Load city boundary data from tigris
+ - Crop a polygon shapefile to city borders
+ - Load a point data-set showing the location of Chicago shops
+ - Merge points with polygon data.
+ 
+IF YOU HAVEN'T COMPLETED THE CODE SET-UP AND SET YOUR CENSUS KEY, STOP HERE, GO BACK AND DO IT NOW.
+
+
+### Loading census data from tidycensus
+
+*Hint: The US Census has _hundreds_ of datasets that you can access. So in the future if there is an obscure census dataset you want to import into R, use this tutorial https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html. Here we are going to focus on common datasets available through tidycensus, based loosely on this tutorial https://crd150.github.io*
+
+We are going to focus on installing demographic data from the American Community Survey using the `tidycensus` package.  
+
+The American Community Survey is a huge dataset for the US Population at Census tract scale.  There are variables from population density, to demographic data, to employment and economic indicators. We don't want to download all the data as that would be overwhelming.  To see what variables are available to us, we will use the following command. This will take some time to run. You can see the full table by clicking on its name in the environment tab or using the View command
+
+```{r, eval=FALSE}
+#tidycensus package
+v17 <- load_variables(2017, "acs5", cache = TRUE)
+head(v17)
+#View(v17)
+```
+
+To search for specific data, select “Filter” located at the top left of this window and use the search boxes that pop up. For example, type in “population” in the box under “concept”. You should see near the top of the list the first set of variables we’ll want to download - population, with the unique ID "B01003_001".  I also searched for "income" under the label column and selected the total number of people with income $75 000 or more (ID:"B06010_011") and the medium income (ID: "B19013_001).  Alternatively, I looked them up at this website: https://www.socialexplorer.com/data/ACS2017_5yr/metadata/?ds=ACS17_5yr. 
+
+Now we have the ID for those commands, we want to download the data itself. The command/function for downloading American Community Survey (ACS) Census data is `get_acs()`. The command for downloading decennial Census data is `get_decennial()`. 
+
+
+```{r}
+# Download illinois ACS data at census tract level for my chosen variables, using tidycensus
+IL.Census <- suppressMessages(get_acs(geography = "tract", 
+              year = 2017,
+              variables = c(housevalue       = "B25075_001",  # house value
+                            totp             = "B05012_001", # total population
+                            tothouse         = "B25001_001", # total housing units	
+                            med.income       = "B19013_001", # median income  
+                            income.gt75      = "B06010_011", # number of people making > 75000 USD
+                            for.born         = "B05012_003", # number of foreign born people
+                            house.age        = "B25035_001", # average house age
+                            month.house.cost = "B25105_001", # monthly house expenditures
+                            med.gross.rent   = "B25064_001", # median rent
+                            workhome         = "B08101_049", # number who work from home
+                            owneroccupied    = "B25003_002", # total owner occupied
+                            totalbeds        = "B25041_001", # total number of beds in the house
+                            broadband        = "B28002_004"),# total with access to broadband
+              state = "IL",
+              survey = "acs5",
+              geometry = TRUE))
+
+# And set an appropriate UTM map projection. I found the EPSG code literally by googling Chicago UTM projection
+IL.Census <- st_transform(IL.Census,26916)
+IL.Census
+# If you just want to download a table, with no spatial attributes, set geometry to FALSE
+```
+
+In the above code, we specified the following arguments
+
+ - **geography:** The level of geography we want the data in; in our case, the county. Other geographic options can be found here.
+ - **year:** The end year of the data (because we want 2013-2017, we use 2017).
+ - **variables:** The variables we want to bring in as specified in a vector you create using the function c(). Note that we created variable names of our own (e.g. “topop”) and we put the ACS IDs in quotes (“B03002_003”). Had we not done this, the variable names will come in as they are named in the ACS, which are not very descriptive.
+ - **state:** We can filter the counties to those in a specific state. Here it is “CA” for California. If we don’t specify this, we get all counties in the United States. When we cover Census tracts in the next lab, a county filter will also be available.
+ - **survey:** The specific Census survey were extracting data from. We want data from the 5-year American Community Survey, so we specify “acs5”. The ACS comes in 1-, 3-, and 5-year varieties.
+ - **geometry:** If geometry is set to FALSE, it just brings in a standard table.  If it's set to true, it makes it an sf file.
+
+Now let's look at a summary:
+
+```{r}
+IL.Census
+```
+
+We can see we have a spatial polygons file in "long" format e.g. all the variables are stacked on top of each other in the same column, where each one also has a margin of error (the moe column). The long format isn't ideal for our regression analysis, so let's rearrange the data.
+
+
+### Re-arranging the data
+
+To make this simpler, let's remove the margin of error column:
+
+```{r}
+# DON'T RUN THIS TWICE! IF YOU NEED TO RE-RUN, RUN THE ENTIRE CODE FIRST
+IL.Census <- select(IL.Census, -(moe)) 
+IL.Census
+```
+
+For our data to effectively link to spatial data, we want there to be a single row for each county and one column for each variable e.g. we need to reshape the data from _long_ format to _wide_ format.  We can do this using the `pivot_wider` command.
+
+
+```{r}
+IL.Census <- spread(IL.Census,key = variable, value = estimate)
+IL.Census
+# If you are doing this on a table, not a spatial file, you want the pivot_wider command
+```
+
+Finally, remove any empty polygons as they mess up later code
+```{r}
+IL.Census <- IL.Census[ ! st_is_empty( IL.Census ) , ]
+
+```
+
+
+### Converting totals to percentages / densities
+
+At the moment, we have the *total* number of people who make more than $75000 USD.  Given there are a different number of people in each census tract, it would be better to look at the *percentage* of people who make more than $75000.
+
+We can do this using the `mutate()` command.  This allows us to do basic math on table data, in this case dividing the number of people who make more than $75K by the total population for each row/census tract.
+
+
+```{r}
+#make a percentage of high earners column
+IL.Census <- mutate(IL.Census, per.income.gt75 = income.gt75/totp)
+#and a percentage of foreign born column
+IL.Census <- mutate(IL.Census, per.for.born = for.born/totp)
+#and a percentage of who work from home born column
+IL.Census <- mutate(IL.Census, per.workhome = workhome/totp)
+
+#and a percentage of owner occupied housing (DIVIDING BY TOTAL NUMBER OF HOUSES)
+IL.Census <- mutate(IL.Census, per.owneroccupied = owneroccupied/tothouse)
+#and a percentage with broadband
+IL.Census <- mutate(IL.Census, per.broadband = broadband/tothouse)
+
+IL.Census
+```
+
+We can also work out the population density. First we need the spatial area of each census tract. We can do this using the `st_area()` command, then use mutate again to add the population density column
+
+```{r}
+area.m2 <- st_area(IL.Census)
+# This is in metres^2. Convert to Km sq
+area.km2 <- set_units(area.m2, "km^2")
+area.km2 <- as.numeric(area.km2)
+IL.Census <- mutate(IL.Census, pop.density = totp/area.km2)
+
+# and the housing density
+IL.Census <- mutate(IL.Census, house.density = tothouse/area.km2)
+
+IL.Census
+```
+
+### Plotting the data
+
+OK, we now have a load of data loaded for Illinois, let's take a look at it using tmap.  For some reason, R is making me run each code chunk twice.  If you see the warning, "The shape IL.Census contains empty units", then just run the code chunk again.  Here, I have looked at the two population 
+
+```{r}
+
+# create map 1
+map1 <- tm_shape(IL.Census,  unit = "mi") +                      
+           tm_polygons(col="totp",    
+                       style="pretty",    
+                       border.col = NULL,  
+                       palette="YlGnBu",
+                       title = "", # using the more sophisticated tm_layout command
+                       legend.hist = TRUE)   +
+  tm_scale_bar(breaks = c(0, 10, 20)) +
+  tm_layout(main.title = "Total Population",  main.title.size = 0.95, frame = FALSE) +
+  tm_layout(legend.outside = TRUE) 
+   
+
+map2 <- tm_shape(IL.Census, unit = "mi") + 
+           tm_polygons(col = "pop.density", 
+                       style = "quantile",
+                       palette = "Reds", 
+                       border.alpha = 0, 
+                       title = "") +  # using the more sophisticated tm_layout command
+  tm_scale_bar(breaks = c(0, 10, 20)) +
+  tm_compass(type = "4star", position = c("left", "bottom")) + 
+  tm_layout(main.title = "Population density",  main.title.size = 0.95, frame = FALSE) +
+  tm_layout(legend.outside = TRUE) 
+
+tmap_arrange(map1,map2)
+```
+
+
+### Zooming in
+
+This map looks at all of Illinois.  But we want to look at the area just around Chicago.
+
+#### Cropping to a lat long box
+
+There are two ways we could do this.  The first way is to simply "draw" a new lat/long box for the data using the raster crop function. Because the data is in the UTM map projection, I worked out my new bounding box coordinates here: https://www.geoplaner.com/
+
+I have commented out this code chunk, because for administrative data, there is often a better way (see below)
+
+
+```{r}
+# My new region from https://www.geoplaner.com/
+#Crop.Region <- as(extent(361464,470967,4552638,4701992), "SpatialPolygons")
+# Make IL.census an sp format
+#IL.Census.sp <- as(IL.Census,"Spatial")
+# And set the projection to be the same as the Illinois data
+#proj4string(Crop.Region) <- CRS(proj4string(IL.Census.sp))
+
+# Subset the polygons to my new region
+#IL.Census.sp <- crop(IL.Census.sp, Crop.Region, byid=TRUE)
+
+# and convert back to sf
+#IL.Census.Box <- st_as_sf(IL.Census.sp)
+
+# Finally plot
+#tm_shape(IL.Census.Box, unit = "mi") + 
+#           tm_polygons(col = "pop.density", style = "quantile",
+#                       palette = "Reds", border.alpha = 0, 
+#                       title = "Population Density")+
+#    tm_layout(legend.outside = TRUE) 
+
+```
+
+#### Loading city boundary data
+
+Instead of a box, we might want to crop to administrative boundaries.  We can download these using the Tigris package.
+
+This has many thousands of boundary datasets that you can explore here.  Tigris is a really powerful package.  For a tutorial, see here [https://crd150.github.io/lab4.html#tigris_package] and here [https://github.com/walkerke/tigris]
+
+For now, lets download the Chicago metropolitan area data and the city border
+
+```{r}
+cb            <- core_based_statistical_areas(cb = TRUE, year=2017)
+Chicago.metro <- filter(cb, grepl("Chicago", NAME))
+# and set the projection to be identical to the census data
+Chicago.metro <- st_transform(Chicago.metro,crs(IL.Census))
+
+
+#REMEMBER TO CHANGE THE STATE FOR YOUR CITY
+pl           <- places(state = "IL", cb = TRUE, year=2017)
+Chicago.city <- filter(pl, NAME == "Chicago")
+# and set the projection to be identical to the census data
+Chicago.city <- st_transform(Chicago.city,crs(IL.Census))
+
+```
+
+#### Cropping to a city boundary
+
+We can now crop our census data to this specific area using the `ms_clip` function. 
+
+```{r}
+# subset the illinois census data with the Chicago city limits
+Chicago.city.Census <- ms_clip(target = IL.Census, clip = Chicago.city, remove_slivers = TRUE)
+
+tm_shape(Chicago.city.Census, unit = "mi") + 
+           tm_polygons(col = "pop.density", style = "quantile",
+                       palette = "Reds", border.alpha = 0, 
+                       title = "Population Density")+
+    tm_shape(Chicago.city) +
+           tm_borders()+
+    tm_layout(legend.outside = TRUE) 
+```
+
+
+
+## Challenge 1
+
+Tutorial one downloaded census data using the tidycensus package, then used the tigris package to download city boundary file. We then did some data wrangling and subset the data to the city boundary.
+
+1. Our data comes from the American Community Survey collected by the census (https://www.census.gov/programs-surveys/acs/about.html).  Describe this dataset.  What is it? Where does it come from and how is it different from the census?
+2. Your job is now to choose a _different_ city in the US and to repeat the process above.  Remember to choose an appropriate map projection. [Hint, choose a large city with many census tracts & ideally WITHOUT a single "downtown outlier" like New York - if you are struggling to think of somewhere, try Philadelphia or New Orleans].
+
+   a.  Your code should be easy to read with comments in each code chunk.  If I deleted the actual code in each chunk, I should still be able to understand what is going on.  
+   b. IN ADDITION to the census variables already included in the tutorial, I would like you to also include: 
+      + The Gini Index of income inequality: B19083_001
+      + The total number of people who report having a bachelors degree: B06009_005
+      + any other variables you are interested in (optional)
+   c. As you work through the tutorial, I would like you to also convert the total number of people who report having a bachelors degree to a *percentage* of people per census tract that hold such a degree.
+   d. I would like you to include a map of the Gini index as part of your output (clearly marked with a subheading)
+
+## Tutorial 2 Regression
+
+### Basics
+
+Now we have some data, let's do some regression analysis on it.  Building on the lectures, first let's look at the basics.
+
+I would like to understand whether the percentage of people making more than $75,000 in each census tract in Chicago is influenced by some of the other demographic factors that I downloaded.  First, I could look at the general correlation between each one of my variables (e.g. how well does a linear model fit the data).
+
+For example, the correlation between the median income in each census tract and the percentage making > $75,000 can be obtained using the `cor` command.  
+
+```{r}
+cor(Chicago.city.Census$med.income,
+    Chicago.city.Census$per.income.gt75,use="pairwise.complete.obs")
+```
+
+Given that more highly paid people should bump up the median income, unsurprisingly there is a reasonable relationship between the two variables!  In fact, the cor command can go even further and check the correlation between _all_ the variables in our dataset that we care about:
+
+```{r}
+# this will only work for columns containing numbers, so I am explicitly naming the ones I want
+# the st_drop_geometry command makes it not spatial data for a second
+corr<-cor(st_drop_geometry(Chicago.city.Census[,c("housevalue","pop.density","house.density",
+                                                  "per.income.gt75","med.income","totalbeds",
+                                                  "per.for.born","med.gross.rent","per.broadband",
+                                                  "per.owneroccupied","per.workhome",
+                                                  "house.age","month.house.cost")]),use="pairwise.complete.obs")
+
+# Now we can make a cool plot of this, check out other method
+corrplot(corr,method="number",number.cex=.5)
+```
+
+We can also look at the distribution of individual values for a given variable:
+
+```{r}
+# GGplot fancy histogram
+
+# %>% means push the output to the next line (or wherever the > 'points')
+# + means add a subcommand
+# R graph gallery
+
+Chicago.city.Census %>%                  
+   ggplot( aes(x=per.income.gt75)) +  
+    geom_histogram(fill="#69b3a2") +
+    ggtitle("Percentage with income > $75000") +
+    theme_ipsum() +
+    theme(plot.title = element_text(size=15))
+
+```
+
+
+```{r}
+#Also a summary
+summary(Chicago.city.Census$per.income.gt75)
+
+```
+
+I notice that there are 3 missing values, so I will remove those as they will mess up the spatial regression analysis
+
+```{r}
+# Convert to sp
+Chicago.city.Census.sp <- as(Chicago.city.Census,"Spatial")
+
+#Remove all rows containing any missing values. We'll lose data, but for now it will make everything work
+# from the spatial eco package
+Chicago.city.Census.sp <- sp.na.omit(Chicago.city.Census.sp, margin = 1)
+
+#And convert back to sf
+Chicago.city.Census <- st_as_sf(Chicago.city.Census.sp)
+```
+
+
+### Basic regression
+
+We can make a basic scatterplot using the plot command.  Alternatively, we can make an interactive plot using ggplot.  I want to explore whether people who make over $75000 are more likely to work from home(pre-COVID). 
+
+BUT!  The ecological fallacy means we can't fully do this.  ALL WE CAN TEST IS: **Do census tracts which contain more people who work from home ALSO contain more people who make > $75000.**.  The people who make more than $75K might be the ones who travel to work but just live in the same place.
+
+
+```{r}
+# Make an interactive plot
+# http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually
+
+p <- Chicago.city.Census %>%                  
+  ggplot( aes( per.income.gt75, per.workhome, label=NAME)) +
+  geom_point() +
+  theme_classic()+
+  scale_color_gradient(low="blue", high="red")
+
+ggplotly(p)
+```
+
+OK, we can see that there appears to be a positive relationship between the two, but a lot of spread. Now let's make a linear fit using the OLS package.  We can see that this has an R^2^ of 0.497 e.g. the model can explain ~50% of the variance (spread) seen in the data.
+
+```{r}
+# using the OLS package. Pretty output but some other functions don't work.
+fit1.ols <- ols_regress (per.workhome ~ per.income.gt75, data = Chicago.city.Census)
+# and using base R
+fit1.lm <- lm(per.workhome ~ per.income.gt75, data = Chicago.city.Census,na.action="na.exclude")
+
+fit1.ols
+```
+
+Our model is now:
+percentage.workfromhome = 0.008+ 0.127xper.income.gt75 
+
+We can add a fit using abline (or check out R graph gallery):
+
+```{r}
+plot(Chicago.city.Census$per.workhome ~ Chicago.city.Census$per.income.gt75,pch=16,cex=.5,col="blue")
+abline(fit1.lm)
+```
+
+
+
+Now, lets see if adding a second variable makes the fit better.  I'm guessing that census tracts where people work from home more often also have better broadband.  Let's have a look at the scatterplot of both variables:
+
+```{r}
+# Make an interactive plot
+# http://www.sthda.com/english/wiki/ggplot2-colors-how-to-change-colors-automatically-and-manually
+
+p <- Chicago.city.Census %>%                  
+  ggplot( aes(per.income.gt75,per.workhome,col= per.broadband,label=NAME)) +
+  geom_point() +
+  theme_classic()+
+  scale_color_gradient(low="blue", high="red")
+
+ggplotly(p)
+```
+
+There seems to be some relationship. Let's add this to the model and take a look:
+
+```{r}
+# using the OLS package
+fit2.ols <- ols_regress (per.workhome ~per.income.gt75 + per.broadband, data = Chicago.city.Census)
+fit2.lm  <- lm (per.workhome ~per.income.gt75 + per.broadband, data = Chicago.city.Census,na.action="na.exclude")
+
+fit2.ols
+```
+
+So now the model is:
+
+percentage.workfromhome = 0.004 + 0.119xper.income.gt75 + 0.008xper.broadband
+
+The model improved!  A little!  We can see that the R^2^ went up to 0.498.  But is this enough to be significant or meaningful? (it might be if there is enough data).  One way to check is to compare the two models using ANOVA.  This conducts a significance test to assess whether there is additional value to adding a new variable.  In this case, the p-value is 0.07 - not super low=, so I would need a compelling reason to keep percentage broadband in the model.
+
+```{r}
+anova(fit1.lm,fit2.lm)
+```
+
+We can also use AIC, where the LOWER number is typically the better fit (taking into account overfitting).  In this case, we can see that it thinks Broadband is a useful variable to keep even if it has limited influence.  
+
+```{r}
+AIC(fit1.lm,fit2.lm)
+```
+
+So as it's borderline and AIC suggests it is useful, I will keep it in the model.
+
+### Spatial residuals
+
+One of the 4 assumptions around regression is that your data should be independent.  We don't want the residuals to have any influence or knowledge of each other.  We know that census data is highly geographic, so let's look at a MAP of the residuals (e.g. the distance from each point to the model line of best fit, high means the model underestimated the data, negative means the model overestimated the data).  
+
+To do, this we first add the residuals to our table
+
+```{r}
+Chicago.city.Census$Fit2.Residuals <- residuals(fit2.lm)
+```
+
+Now let's have a look!  If we have fully explained all the data and the data is spatially independent then there should be no pattern.
+
+We can look at the residuals directly:
+
+```{r}
+# subset the illinois census data with the Chicago city limits
+tm_shape(Chicago.city.Census, unit = "mi") + 
+           tm_polygons(col = "Fit2.Residuals", style = "quantile",
+                       palette = "-RdBu", border.alpha = 0, 
+                       title = "Fit 2 residuals")+
+    tm_shape(Chicago.city) +
+           tm_borders()+
+    tm_layout(legend.outside = TRUE) 
+```
+Or.. we can look at the extreme residuals by converting to standard deviation.
+
+```{r}
+Chicago.city.Census$sd_breaks <- scale(Chicago.city.Census$Fit2.Residuals)[,1]
+# because scale is made for matrices, we just need to get the first column using [,1]
+
+my_breaks <- c(-14,-3,-2,-1,1,2,3,14)
+
+tm_shape(Chicago.city.Census) + 
+  tm_fill("sd_breaks", title = "Residuals", style = "fixed", breaks = my_breaks, palette = "-RdBu") +
+  tm_borders(alpha = 0.1) +
+  tm_layout(main.title = "Residuals (Standard Deviation away from 0)", main.title.size = 0.7 ,
+            legend.position = c("right", "bottom"), legend.title.size = 0.8)+
+      tm_layout(legend.outside = TRUE) 
+
+```
+
+We have a problem!  It is definitely not independent random noise - in fact there are little clusters of high residuals near the centre and other residuals around the edge.  To test this, we can look at a Moran's scatterplot with a queen's spatial matrix. The test confirms highly significant autocorrelation.  Our p-values and regression model coefficients cannot be trusted. so let’s try a spatial lag model.
+
+```{r}
+# Moran.plot gets frustrated when the residuals are NA, for now I will just set them to zero
+Chicago.city.Census$Fit2.Residuals[is.na(Chicago.city.Census$Fit2.Residuals)] <- 0
+spatial.matrix.queen <-poly2nb(Chicago.city.Census, queen=T)
+
+weights.queen <- nb2listw(spatial.matrix.queen, style='B',zero.policy=TRUE)
+
+moran.plot(Chicago.city.Census$Fit2.Residuals, weights.queen,
+           xlab = "Model residuals",
+           ylab = "Neighbors residuals",zero.policy=TRUE)
+
+moran.test(Chicago.city.Census$Fit2.Residuals, weights.queen,zero.policy=TRUE)
+```
+
+### Spatial lag model
+
+If the test is significant (as in this case), then we possibly need to think of a more suitable model to represent our data: a spatial regression model. Remember spatial dependence means that (more typically) there will be areas of spatial clustering for the residuals in our regression model. We want a better model that does not display any spatial clustering in the residuals.
+
+There are two general ways of incorporating spatial dependence in a regression model:
+
+ - A spatial error model
+ - A spatial lagged model
+
+The difference between these two models is both technical and conceptual. The spatial error model assumes that the:
+
+*“spatial dependence observed in our data does not reflect a truly spatial process, but merely the geographical clustering of the sources of the behavior of interest. For example, citizens in adjoining neighborhoods may favour the same (political) candidate not because they talk to their neighbors, but because citizens with similar incomes tend to cluster geographically, and income also predicts vote choice. Such spatial dependence can be termed attributional dependence” (Darmofal, 2015: 4)*
+
+The spatially lagged model, on the other hand, incorporates spatial dependence explicitly by adding a “spatially lagged” variable y on the right hand side of our regression equation. It assumes that spatial processes THEMSELVES are an important thing to model:
+
+*“If behavior is likely to be highly social in nature, and understanding the interactions between interdependent units is critical to understanding the behavior in question. For example, citizens may discuss politics across adjoining neighbors such that an increase in support for a candidate in one neighborhood directly leads to an increase in support for the candidate in adjoining neighborhoods” (Darmofal, 2015: 4)*
+
+Mathematically, it makes sense to run both models and see which fits best. We can do this using the `lm.LMtests()` function. (note, we are skipping over complexity here!).  See here for more details on the full process: https://maczokni.github.io/crimemapping_textbook_bookdown/spatial-regression-models.html
+
+But that goes beyond the scope of this course.  Here we will try the spatial lag model, because I can imagine that things like broadband access have explicit spatial relationships (e.g. where the cable goes)
+
+To fit a spatial lag model, we use
+
+```{r}
+fit_2_lag <- lagsarlm(per.workhome ~per.income.gt75 + per.broadband, data = Chicago.city.Census, weights.queen,zero.policy=TRUE)
+fit_2_lag
+```
+
+This is now going beyond the scope of this course, instead of a simple linear model, we are running a generalised additive model, which is mathematically more complex:
+
+percentage.workfromhome = rho(WEIGHTS*percentage.workfromhome) + b0 + b1xper.income.gt75 + b2xper.broadband e.g.
+
+percentage.workfromhome = 0.051(WEIGHTS*percentage.workfromhome) + 0.002 + 0.0846xper.income.gt75 + 0.004xper.broadband 
+
+You will notice that there is a new term Rho. What is this? This is our spatial lag. It is a variable that measures the percentage working from home in the census tracts SURROUNDING each tract of interest in our spatial weight matrix. We are simply using this variable as an additional explanatory variable to our model, so that we can appropriately take into account the spatial clustering detected by our Moran’s I test. You will notice that the estimated coefficient for this term is both positive and statistically significant. In other words, when the percentage working from home in surrounding areas increases, so does the percentage working from home in each country, even when we adjust for the other explanatory variables in our model. 
+
+Let's use AIC to compare all 3 models.
+
+```{r}
+AIC(fit1.lm,fit2.lm,fit_2_lag)
+```
+
+We see that our new lagged version has the lowest AIC and so is likely to be the best model for predicting the percentage of people who work from home in each census tract.
+
+Now, if we have fully taken into account the spatial autocorrelation of our data, the spatial residuals should show no pattern and no autocorrelation.  Let's take a look@
+
+
+```{r}
+# Create the residuals
+Chicago.city.Census$Fit2.LaggedResiduals <- residuals(fit_2_lag)
+
+Chicago.city.Census$sd_breaks.lagged <- scale(Chicago.city.Census$Fit2.LaggedResiduals)[,1]
+# because scale is made for matrices, we just need to get the first column using [,1]
+
+#plot standard deviations
+my_breaks <- c(-14,-3,-2,-1,1,2,3,14)
+tm_shape(Chicago.city.Census) + 
+  tm_fill("sd_breaks", title = "sd_breaks.lagged", style = "fixed", breaks = my_breaks, palette = "-RdBu",midpoint=0) +
+  tm_borders(alpha = 0.1) +
+  tm_layout(main.title = "Residuals for lagged model (Standard Deviation away from 0)", main.title.size = 0.7 ,
+            legend.position = c("right", "bottom"), legend.title.size = 0.8)+
+      tm_layout(legend.outside = TRUE) 
+
+#plot Moran's I
+moran.plot(Chicago.city.Census$Fit2.LaggedResiduals, weights.queen,
+           xlab = "Model residuals",
+           ylab = "Neighbors residuals",zero.policy=TRUE)
+
+moran.test(Chicago.city.Census$Fit2.LaggedResiduals, weights.queen,zero.policy=TRUE)
+
+
+```
+
+Looking at the map, to the eye, there looks to be a spatial pattern, you can see that in the Moran test, the Moran's I is no longer significant (the p-value is the likelihood this level of autocorrelation could have been seen by chance. A HIGH value of the p-value means that it is likely to have happened by chance, so it's not significant). 
+
+So we have successfully included location in our model.  If you still see a significant pattern at this stage, you could consider adjusting your spatial weights matrix (maybe a "neighbor" is a 2nd order queens, or the census tracks within 50km..).
+
+### Plotting the results
+
+So we have a model!
+
+Finally, we went to all the trouble to create a model predicting the percentage of people working from home - let's look at the results.
+
+
+```{r}
+Chicago.city.Census$Fit2.Lagged.Prediction <- predict(fit2.lm)
+
+# subset the illinois census data with the Chicago city limits
+map1 <- tm_shape(Chicago.city.Census, unit = "mi") + 
+           tm_polygons(col = "Fit2.Lagged.Prediction", style = "quantile",
+                       palette = "-Spectral", border.alpha = 0, 
+                       title = "Prediction of the percentage of people working from home")+
+    tm_shape(Chicago.city) +
+           tm_borders()+
+    tm_layout(legend.outside = TRUE) 
+
+map1 <- tm_shape(Chicago.city.Census, unit = "mi") + 
+           tm_polygons(col = "per.workhome", style = "quantile",
+                       palette = "-Spectral", border.alpha = 0, 
+                       title = "ACTUAL percentage of people working from home")+
+    tm_shape(Chicago.city) +
+           tm_borders()+
+    tm_layout(legend.outside = TRUE) 
+
+
+```
+
+## Challenge 2
+
+Make a new sub-heading called Challenge 2.  Below, answer these questions.  Make sure they are clearly marked to make it easy to find and grade them.
+
+ 1. What are the 4 assumptions underpinning linear regression?  
+ 2. If the data is spatially autocorrelated, which assumption is broken?
+ 3. What is the ecological fallacy and why is it important when looking at census data (hint, look at Lecture 4 and in this lab)
+ 4. If I tested 3 models using AIC and saw the values (Model1: -2403, Model2: -2746, Model3:-3102), which model would I be likely to choose?
+ 
+Tutorial two applied regression analysis to our census data, focusing on the percentage of people working from home
+
+Your job is now to apply this analysis to your City from part 1 and to repeat the process above. FIRST get it working to predict the percentage of people working from home.
+
+Make sure to tell me what you are doing at each stage and to interpret your output.  Maybe this relationship just exists for Chicago... Tell in a few sentences which model you chose, why and plot the predicted values.
+
+BEFORE YOU START, READ THE SHOW ME SOMETHING NEW OPTIONS.
+
+## Lab 7 Show me something new
+
+For 5/5 you can continue to do the classic “something new”, where you need to demonstrates the use of a function or package that was not specifically covered in the handout, lecture, or lab. Remember you actually have to do something new, not repeat what you did in previous weeks
+
+OR
+
+For 5/5 : Instead of predicting the percentage of people working from home, do your analysis predicting the median house value per census tract (housevalue).  You should look at the list of variables shown in the corrplot, decide on some variables you think might predict house values, check the residuals for spatial dependence and try a spatial lag model. Then choose the best model as suggested by AIC.
+
+## Lab-7 submission check
+
+For this lab, here is the mark breakdown:
+    
+**HTML FILE SUBMISSION - 10 marks**
+
+**RMD CODE SUBMISSION - 10 marks**
+
+**WORKING CODE - 10 marks**: Your code works and the output of each code chunk is included in the html file output (e.g. you pressed run-all before you finished)
+
+**EASY TO READ LAB SCRIPT - 10 marks**: You have followed the style guide in section 7.1. You have commented your code chunks. Even if I had deleted the code itself, I would still be able to understand what you are doing in each code chunk from your comments. 
+
+**CHALLENGE 1a - 5 marks**: You thoughtfully describe the American Community Survey data and answer the questions
+
+**CHALLENGE 1b - 10 marks**: You manage to download the ACS data for a new city, including the Gini index of income inequality and the PERCENTAGE of people with a bachelors degree.  Your code makes sense, e.g. it doesn't refer to chicago the whole time.
+
+**CHALLENGE 1c - 5 marks**: You have professionally plotted the Gini data for your city.
+
+**CHALLENGE 2a - 8 marks**: You have explained the 4 assumptions underpinning regression (using more than a single word for each one)
+
+**CHALLENGE 2b - 4 marks**: You have explained which assumption is broken for spatial autocorrelation and why (you get partial marks for good reasoning even if you are not sure of the answer)
+
+**CHALLENGE 2c - 4 marks**: You have described the ecological fallacy and why it's important
+
+**CHALLENGE 2d - 4 marks**: You have correctly answered the AIC question
+
+**CHALLENGE 2e - 15 marks**: You have applied a regression analysis to your own data. Your code makes sense, e.g. it doesn't refer to chicago the whole time and you have interpreted the output correctly.
+
+**SOMETHING NEW - 5 marks**
+You demonstrated the use of a function or concept that was not specifically covered in the handout, lecture, or lab
+OR
+Your regression analysis focused on house value not the percentage of people working from home.
+
+[100 marks total]
+
+

@@ -1,0 +1,92 @@
+
+# TEST 1 
+
+## Set up the data
+
+```{r}
+library(spatstat)
+
+```
+
+
+```{r}
+lanternfly <- read.csv("./tmp1.csv")
+beetle <- read.csv("./tmp2.csv")
+   
+par(mfrow=c(1,2))
+plot(lanternfly,pch=20,main="Lanternfly sightings",xlim=c(0,5),ylim=c(0,5))
+plot(beetle,pch=20,main="Beetle sightings",xlim=c(0,5),ylim=c(0,5))
+
+```
+
+## Lanternfly analysis
+
+```{r}
+lanternfly.ppp <- as.ppp(lanternfly,c(0,5,0,5))
+
+# Count the number of points
+Q.counts <- quadratcount(lanternfly.ppp,nx=5,ny=5)  
+
+# we use the as vector command to convert the data from a spatial ppp object back to a normal number
+Q.variance <- var(as.vector(Q.counts))
+Q.mean <- mean(as.vector(Q.counts))
+Q.VMR <- Q.variance / Q.mean
+print(paste("VMR: " ,Q.VMR))
+```
+
+
+```{r}
+plot(lanternfly.ppp,           # I'm plotting the longleaf data
+     use.marks = F,      # I didn't want it to plot the different circle sizes so i turned off marks
+     cex = 1, pch = 4, # point size and shape
+     main="Grid 1") # plot title
+plot(Q.counts, add = TRUE, cex = 2)  # Now I add Q on top.
+
+plot(intensity(Q.counts, image=TRUE), main="Point intensity of lanternfly distribution", las=1)  # Plot intensity raster
+plot(lanternfly.ppp, pch=20, cex=0.6,  add=TRUE)                     # Add points
+
+
+```
+
+
+```{r}
+Q.test.fly <- quadrat.test(lanternfly.ppp, nx = 5, ny = 5)  # Calculate the quadrat counts.
+Q.test.fly
+
+```
+
+## Beetle analysis
+
+```{r}
+beetle.ppp <- as.ppp(beetle,c(0,5,0,5))
+
+# Count the number of points
+Q.counts <- quadratcount(beetle.ppp,nx=5,ny=5)  
+
+# we use the as vector command to convert the data from a spatial ppp object back to a normal number
+Q.variance <- var(as.vector(Q.counts))
+Q.mean <- mean(as.vector(Q.counts))
+Q.VMR <- Q.variance / Q.mean
+print(paste("VMR: ", Q.VMR))
+```
+
+```{r}
+plot(beetle.ppp,           # I'm plotting the longleaf data
+     use.marks = F,      # I didn't want it to plot the different circle sizes so i turned off marks
+     cex = 1, pch = 4, # point size and shape
+     main="Beetle distribution") # plot title
+plot(Q.counts, add = TRUE, cex = 2)  # Now I add Q on top.
+
+plot(intensity(Q.counts, image=TRUE), main="Point intensity of beetle distribution", las=1)  # Plot intensity raster
+plot(beetle.ppp, pch=20, cex=0.6,  add=TRUE)                     # Add points
+
+
+
+```
+
+```{r}
+Q.test.beetle <- quadrat.test(beetle.ppp, nx = 5, ny = 5)  # Calculate the quadrat counts.
+Q.test.beetle
+```
+
+

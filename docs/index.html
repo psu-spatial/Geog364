@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Geog-364: Introduction to R</title>
+  <meta name="description" content="Lab 1 support guide" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Geog-364: Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Lab 1 support guide" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Geog-364: Introduction to R" />
+  
+  <meta name="twitter:description" content="Lab 1 support guide" />
+  
+
+<meta name="author" content="Helen Greatrex" />
+
+
+<meta name="date" content="2020-12-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+<link rel="next" href="lab-2.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOGRAPHY 364 2020</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Lab 1</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#why-is-this-class-in-r"><i class="fa fa-check"></i><b>1.1.1</b> Why is this class in R?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#what-are-r-and-r-studio"><i class="fa fa-check"></i><b>1.1.2</b> What are R and R-studio?</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#what-are-r-markdown-r-shiny"><i class="fa fa-check"></i><b>1.1.3</b> What are R-Markdown &amp; R-Shiny?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installing-r-and-r-studio"><i class="fa fa-check"></i><b>1.2</b> Installing R and R-studio</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#i-have-rr-studio-installed-already"><i class="fa fa-check"></i><b>1.2.1</b> I have R/R-studio installed already</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#installing-rr-studio-for-the-first-time"><i class="fa fa-check"></i><b>1.2.2</b> Installing R/R-studio for the first time</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#getting-started"><i class="fa fa-check"></i><b>1.3</b> Getting started</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#open-r-studio"><i class="fa fa-check"></i><b>1.3.1</b> Open R-studio</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#change-a-few-settings"><i class="fa fa-check"></i><b>1.3.2</b> Change a few settings</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#project"><i class="fa fa-check"></i><b>1.3.3</b> Create an R-project</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#lab-challenge-1"><i class="fa fa-check"></i><b>1.4</b> Lab challenge 1</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#r-coding-basics"><i class="fa fa-check"></i><b>1.5</b> R coding basics</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#basic-arithmatic"><i class="fa fa-check"></i><b>1.5.1</b> Basic arithmatic</a></li>
+<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#comparing-things"><i class="fa fa-check"></i><b>1.5.2</b> Comparing things</a></li>
+<li class="chapter" data-level="1.5.3" data-path="index.html"><a href="index.html#variables-and-assignment"><i class="fa fa-check"></i><b>1.5.3</b> Variables and assignment</a></li>
+<li class="chapter" data-level="1.5.4" data-path="index.html"><a href="index.html#functions"><i class="fa fa-check"></i><b>1.5.4</b> Functions</a></li>
+<li class="chapter" data-level="1.5.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.5.5</b> Packages</a></li>
+<li class="chapter" data-level="1.5.6" data-path="index.html"><a href="index.html#coding-help"><i class="fa fa-check"></i><b>1.5.6</b> Coding help</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#lab-challenge-2"><i class="fa fa-check"></i><b>1.6</b> Lab Challenge 2</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#create-a-r-markdown-document"><i class="fa fa-check"></i><b>1.7</b> Create a R-Markdown document</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#what-is-markdown"><i class="fa fa-check"></i><b>1.7.1</b> What is markdown?</a></li>
+<li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#creating-a-notebook-document"><i class="fa fa-check"></i><b>1.7.2</b> Creating a notebook document</a></li>
+<li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#Format"><i class="fa fa-check"></i><b>1.7.3</b> Text formatting (in the white area)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#friend"><i class="fa fa-check"></i><b>1.8</b> “Friendly text”</a></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#lab-challenge-3"><i class="fa fa-check"></i><b>1.9</b> Lab Challenge 3</a></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#online-courses-and-resources"><i class="fa fa-check"></i><b>1.10</b> Online courses and resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="lab-2.html"><a href="lab-2.html"><i class="fa fa-check"></i><b>2</b> Lab 2</a><ul>
+<li class="chapter" data-level="2.1" data-path="lab-2.html"><a href="lab-2.html#Lab2learn"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="lab-2.html"><a href="lab-2.html#lab-set-up"><i class="fa fa-check"></i><b>2.2</b> Lab set-up</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="lab-2.html"><a href="lab-2.html#create-a-lab-2-project"><i class="fa fa-check"></i><b>2.2.1</b> Create a Lab 2 Project</a></li>
+<li class="chapter" data-level="2.2.2" data-path="lab-2.html"><a href="lab-2.html#markdown-adding-a-theme"><i class="fa fa-check"></i><b>2.2.2</b> Markdown adding a theme</a></li>
+<li class="chapter" data-level="2.2.3" data-path="lab-2.html"><a href="lab-2.html#installing-common-spatial-packages"><i class="fa fa-check"></i><b>2.2.3</b> Installing common spatial packages</a></li>
+<li class="chapter" data-level="2.2.4" data-path="lab-2.html"><a href="lab-2.html#download-data-for-this-lab"><i class="fa fa-check"></i><b>2.2.4</b> Download data for this lab</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="lab-2.html"><a href="lab-2.html#data.frames-and-summary-statistics"><i class="fa fa-check"></i><b>2.3</b> Data.frames and summary statistics</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="lab-2.html"><a href="lab-2.html#reading-in-your-first-file"><i class="fa fa-check"></i><b>2.3.1</b> Reading in your first file</a></li>
+<li class="chapter" data-level="2.3.2" data-path="lab-2.html"><a href="lab-2.html#summarising-data"><i class="fa fa-check"></i><b>2.3.2</b> Summarising data</a></li>
+<li class="chapter" data-level="2.3.3" data-path="lab-2.html"><a href="lab-2.html#selecting-columns-and-rows"><i class="fa fa-check"></i><b>2.3.3</b> Selecting columns and rows</a></li>
+<li class="chapter" data-level="2.3.4" data-path="lab-2.html"><a href="lab-2.html#basic-plot"><i class="fa fa-check"></i><b>2.3.4</b> Basic plot</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="lab-2.html"><a href="lab-2.html#converting-to-spatial-data"><i class="fa fa-check"></i><b>2.4</b> Converting to spatial data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="lab-2.html"><a href="lab-2.html#making-a-data.frame-spatial"><i class="fa fa-check"></i><b>2.4.1</b> Making a data.frame “spatial”</a></li>
+<li class="chapter" data-level="2.4.2" data-path="lab-2.html"><a href="lab-2.html#reading-in-vector-line-data-rnaturalearth"><i class="fa fa-check"></i><b>2.4.2</b> Reading in vector line data (rnaturalearth)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="lab-2.html"><a href="lab-2.html#assigning-a-map-projection"><i class="fa fa-check"></i><b>2.5</b> Assigning a map projection</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="lab-2.html"><a href="lab-2.html#checking-a-projection-in-the-sp-package"><i class="fa fa-check"></i><b>2.5.1</b> Checking a projection in the <strong>sp</strong> package</a></li>
+<li class="chapter" data-level="2.5.2" data-path="lab-2.html"><a href="lab-2.html#assignchanging-projections-in-the-sp-package"><i class="fa fa-check"></i><b>2.5.2</b> Assign/changing projections in the sp package</a></li>
+<li class="chapter" data-level="2.5.3" data-path="lab-2.html"><a href="lab-2.html#map-projections-in-the-sf-package"><i class="fa fa-check"></i><b>2.5.3</b> Map projections in the <strong>sf</strong> package</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="lab-2.html"><a href="lab-2.html#interactive-leaflet-plots"><i class="fa fa-check"></i><b>2.6</b> Interactive Leaflet plots</a></li>
+<li class="chapter" data-level="2.7" data-path="lab-2.html"><a href="lab-2.html#describe-the-ghana-data"><i class="fa fa-check"></i><b>2.7</b> Describe the Ghana data</a></li>
+<li class="chapter" data-level="2.8" data-path="lab-2.html"><a href="lab-2.html#show-me-something-new"><i class="fa fa-check"></i><b>2.8</b> Show me something new</a></li>
+<li class="chapter" data-level="2.9" data-path="lab-2.html"><a href="lab-2.html#lab-submission-check"><i class="fa fa-check"></i><b>2.9</b> Lab submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="lab-3.html"><a href="lab-3.html"><i class="fa fa-check"></i><b>3</b> Lab 3</a><ul>
+<li class="chapter" data-level="3.1" data-path="lab-3.html"><a href="lab-3.html#Lab3learn"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="lab-3.html"><a href="lab-3.html#lab-3-set-up"><i class="fa fa-check"></i><b>3.2</b> Lab 3 Set-Up</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="lab-3.html"><a href="lab-3.html#create-your-lab-3-project-file"><i class="fa fa-check"></i><b>3.2.1</b> Create your Lab 3 project file</a></li>
+<li class="chapter" data-level="3.2.2" data-path="lab-3.html"><a href="lab-3.html#install-new-packages"><i class="fa fa-check"></i><b>3.2.2</b> Install new packages</a></li>
+<li class="chapter" data-level="3.2.3" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>3.2.3</b> Create your NoteBook file</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="lab-3.html"><a href="lab-3.html#initial-data-exploration"><i class="fa fa-check"></i><b>3.3</b> Initial Data exploration</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="lab-3.html"><a href="lab-3.html#loading-the-data"><i class="fa fa-check"></i><b>3.3.1</b> Loading the data</a></li>
+<li class="chapter" data-level="3.3.2" data-path="lab-3.html"><a href="lab-3.html#reading-more-information"><i class="fa fa-check"></i><b>3.3.2</b> Reading more information</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-1"><i class="fa fa-check"></i><b>3.4</b> Lab-3 Challenge 1</a></li>
+<li class="chapter" data-level="3.5" data-path="lab-3.html"><a href="lab-3.html#mean-centre-and-standard-ellipse"><i class="fa fa-check"></i><b>3.5</b> Mean Centre and Standard Ellipse</a></li>
+<li class="chapter" data-level="3.6" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-2"><i class="fa fa-check"></i><b>3.6</b> Lab-3 Challenge 2</a></li>
+<li class="chapter" data-level="3.7" data-path="lab-3.html"><a href="lab-3.html#global-density-analysis"><i class="fa fa-check"></i><b>3.7</b> Global Density analysis</a></li>
+<li class="chapter" data-level="3.8" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-3"><i class="fa fa-check"></i><b>3.8</b> Lab-3 Challenge 3</a></li>
+<li class="chapter" data-level="3.9" data-path="lab-3.html"><a href="lab-3.html#local-intensity---quadrat-analysis"><i class="fa fa-check"></i><b>3.9</b> Local intensity - quadrat analysis</a></li>
+<li class="chapter" data-level="3.10" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-4"><i class="fa fa-check"></i><b>3.10</b> Lab-3 Challenge 4</a></li>
+<li class="chapter" data-level="3.11" data-path="lab-3.html"><a href="lab-3.html#issues-with-quadrat-analysis"><i class="fa fa-check"></i><b>3.11</b> Issues with quadrat analysis</a></li>
+<li class="chapter" data-level="3.12" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-5"><i class="fa fa-check"></i><b>3.12</b> Lab-3 Challenge 5</a></li>
+<li class="chapter" data-level="3.13" data-path="lab-3.html"><a href="lab-3.html#kernel-density-estimation-kde"><i class="fa fa-check"></i><b>3.13</b> Kernel Density Estimation (KDE)</a></li>
+<li class="chapter" data-level="3.14" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-6"><i class="fa fa-check"></i><b>3.14</b> Lab-3 Challenge 6</a></li>
+<li class="chapter" data-level="3.15" data-path="lab-3.html"><a href="lab-3.html#automatically-calculating-an-optimal-bandwidth"><i class="fa fa-check"></i><b>3.15</b> Automatically calculating an “optimal” bandwidth</a></li>
+<li class="chapter" data-level="3.16" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-7"><i class="fa fa-check"></i><b>3.16</b> Lab-3 Challenge 7</a></li>
+<li class="chapter" data-level="3.17" data-path="lab-3.html"><a href="lab-3.html#lab-3-show-me-something-new"><i class="fa fa-check"></i><b>3.17</b> Lab-3 Show me something new</a></li>
+<li class="chapter" data-level="3.18" data-path="lab-3.html"><a href="lab-3.html#lab-3-submission-check"><i class="fa fa-check"></i><b>3.18</b> Lab-3 submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="test-1.html"><a href="test-1.html"><i class="fa fa-check"></i><b>4</b> TEST 1</a><ul>
+<li class="chapter" data-level="4.1" data-path="test-1.html"><a href="test-1.html#set-up-the-data"><i class="fa fa-check"></i><b>4.1</b> Set up the data</a></li>
+<li class="chapter" data-level="4.2" data-path="test-1.html"><a href="test-1.html#lanternfly-analysis"><i class="fa fa-check"></i><b>4.2</b> Lanternfly analysis</a></li>
+<li class="chapter" data-level="4.3" data-path="test-1.html"><a href="test-1.html#beetle-analysis"><i class="fa fa-check"></i><b>4.3</b> Beetle analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="lab-4.html"><a href="lab-4.html"><i class="fa fa-check"></i><b>5</b> Lab 4</a><ul>
+<li class="chapter" data-level="5.1" data-path="lab-4.html"><a href="lab-4.html#lab-4-set-up"><i class="fa fa-check"></i><b>5.1</b> Lab 4 Set-Up</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="lab-4.html"><a href="lab-4.html#create-your-lab-4-project-file"><i class="fa fa-check"></i><b>5.1.1</b> Create your Lab 4 project file</a></li>
+<li class="chapter" data-level="5.1.2" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>5.1.2</b> Create your NoteBook file</a></li>
+<li class="chapter" data-level="5.1.3" data-path="lab-4.html"><a href="lab-4.html#download-and-run-packages"><i class="fa fa-check"></i><b>5.1.3</b> Download and run packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="lab-4.html"><a href="lab-4.html#challenge-1-exploratory-analysis"><i class="fa fa-check"></i><b>5.2</b> Challenge 1, Exploratory analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="lab-4.html"><a href="lab-4.html#challenge-2-set-up-the-data"><i class="fa fa-check"></i><b>5.3</b> Challenge 2, set up the data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="lab-4.html"><a href="lab-4.html#a.-read-in-and-explore-the-point-data"><i class="fa fa-check"></i><b>5.3.1</b> A. Read in and explore the point data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="lab-4.html"><a href="lab-4.html#b.-read-in-the-other-data-and-set-projections"><i class="fa fa-check"></i><b>5.3.2</b> B. Read in the other data and set projections</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="lab-4.html"><a href="lab-4.html#challenge-3-make-data-ppp"><i class="fa fa-check"></i><b>5.4</b> Challenge 3, Make data ppp</a></li>
+<li class="chapter" data-level="5.5" data-path="lab-4.html"><a href="lab-4.html#challenge-4-quadrat-analysis"><i class="fa fa-check"></i><b>5.5</b> Challenge 4, quadrat analysis</a></li>
+<li class="chapter" data-level="5.6" data-path="lab-4.html"><a href="lab-4.html#challenge-5-elevation-links"><i class="fa fa-check"></i><b>5.6</b> Challenge 5, elevation links</a></li>
+<li class="chapter" data-level="5.7" data-path="lab-4.html"><a href="lab-4.html#challenge-6-nearest-neighbour"><i class="fa fa-check"></i><b>5.7</b> Challenge 6 Nearest neighbour</a></li>
+<li class="chapter" data-level="5.8" data-path="lab-4.html"><a href="lab-4.html#challenge-7-l-analysis"><i class="fa fa-check"></i><b>5.8</b> Challenge 7 L Analysis</a></li>
+<li class="chapter" data-level="5.9" data-path="lab-4.html"><a href="lab-4.html#challenge-8-show-me-something-new"><i class="fa fa-check"></i><b>5.9</b> Challenge 8 Show me something new</a></li>
+<li class="chapter" data-level="5.10" data-path="lab-4.html"><a href="lab-4.html#lab-4-submission-check"><i class="fa fa-check"></i><b>5.10</b> Lab-4 submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lab-5.html"><a href="lab-5.html"><i class="fa fa-check"></i><b>6</b> Lab 5</a><ul>
+<li class="chapter" data-level="6.1" data-path="lab-5.html"><a href="lab-5.html#lab-5-set-up"><i class="fa fa-check"></i><b>6.1</b> Lab 5 Set-Up</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="lab-5.html"><a href="lab-5.html#create-your-lab-5-project-file"><i class="fa fa-check"></i><b>6.1.1</b> Create your Lab 5 project file</a></li>
+<li class="chapter" data-level="6.1.2" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>6.1.2</b> Create your NoteBook file</a></li>
+<li class="chapter" data-level="6.1.3" data-path="lab-5.html"><a href="lab-5.html#style-guide"><i class="fa fa-check"></i><b>6.1.3</b> Style guide</a></li>
+<li class="chapter" data-level="6.1.4" data-path="lab-4.html"><a href="lab-4.html#download-and-run-packages"><i class="fa fa-check"></i><b>6.1.4</b> Download and run packages</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="lab-5.html"><a href="lab-5.html#challenge-1-explore-the-data"><i class="fa fa-check"></i><b>6.2</b> Challenge 1: Explore the data</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="lab-5.html"><a href="lab-5.html#download-load-the-data"><i class="fa fa-check"></i><b>6.2.1</b> Download &amp; load the data</a></li>
+<li class="chapter" data-level="6.2.2" data-path="lab-5.html"><a href="lab-5.html#initial-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Initial analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="lab-5.html"><a href="lab-5.html#convert-to-spatial-data"><i class="fa fa-check"></i><b>6.2.3</b> Convert to spatial data</a></li>
+<li class="chapter" data-level="6.2.4" data-path="lab-5.html"><a href="lab-5.html#add-a-projection"><i class="fa fa-check"></i><b>6.2.4</b> Add a projection</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="lab-5.html"><a href="lab-5.html#challenge-2-exploratory-analysis"><i class="fa fa-check"></i><b>6.3</b> Challenge 2: Exploratory analysis</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="lab-5.html"><a href="lab-5.html#make-plots-in-tmap"><i class="fa fa-check"></i><b>6.3.1</b> Make plots in tmap</a></li>
+<li class="chapter" data-level="6.3.2" data-path="lab-5.html"><a href="lab-5.html#exploratory-analysis"><i class="fa fa-check"></i><b>6.3.2</b> Exploratory analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="lab-5.html"><a href="lab-5.html#challenge-3-thiessen-polygons-by-hand"><i class="fa fa-check"></i><b>6.4</b> Challenge 3: Thiessen polygons by hand</a></li>
+<li class="chapter" data-level="6.5" data-path="lab-5.html"><a href="lab-5.html#challenge-4-thiessen-polygons-in-r"><i class="fa fa-check"></i><b>6.5</b> Challenge 4: Thiessen polygons in R</a></li>
+<li class="chapter" data-level="6.6" data-path="lab-5.html"><a href="lab-5.html#challenge-5-inverse-distance-weighting-info"><i class="fa fa-check"></i><b>6.6</b> Challenge 5: Inverse Distance Weighting info</a></li>
+<li class="chapter" data-level="6.7" data-path="lab-5.html"><a href="lab-5.html#challenge-6-inverse-distance-weighting-code"><i class="fa fa-check"></i><b>6.7</b> Challenge 6: Inverse Distance Weighting code</a></li>
+<li class="chapter" data-level="6.8" data-path="lab-5.html"><a href="lab-5.html#challenge-7-checking-accuracy"><i class="fa fa-check"></i><b>6.8</b> Challenge 7: Checking accuracy</a></li>
+<li class="chapter" data-level="6.9" data-path="lab-5.html"><a href="lab-5.html#challenge-8-your-own-idw"><i class="fa fa-check"></i><b>6.9</b> Challenge 8: Your own IDW</a></li>
+<li class="chapter" data-level="6.10" data-path="lab-5.html"><a href="lab-5.html#challenge-9-show-me-something-new"><i class="fa fa-check"></i><b>6.10</b> Challenge 9 Show me something new</a></li>
+<li class="chapter" data-level="6.11" data-path="lab-5.html"><a href="lab-5.html#lab-5-submission-check"><i class="fa fa-check"></i><b>6.11</b> Lab-5 submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lab-6.html"><a href="lab-6.html"><i class="fa fa-check"></i><b>7</b> Lab 6</a><ul>
+<li class="chapter" data-level="7.1" data-path="lab-6.html"><a href="lab-6.html#lab-6-set-up"><i class="fa fa-check"></i><b>7.1</b> Lab 6 Set-Up</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="lab-6.html"><a href="lab-6.html#create-your-lab-6-project-file"><i class="fa fa-check"></i><b>7.1.1</b> Create your Lab 6 project file</a></li>
+<li class="chapter" data-level="7.1.2" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>7.1.2</b> Create your NoteBook file</a></li>
+<li class="chapter" data-level="7.1.3" data-path="lab-5.html"><a href="lab-5.html#style-guide"><i class="fa fa-check"></i><b>7.1.3</b> Style guide</a></li>
+<li class="chapter" data-level="7.1.4" data-path="lab-4.html"><a href="lab-4.html#download-and-run-packages"><i class="fa fa-check"></i><b>7.1.4</b> Download and run packages</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="lab-6.html"><a href="lab-6.html#tutorial-1-spatial-weights-and-join-counts"><i class="fa fa-check"></i><b>7.2</b> Tutorial 1: Spatial weights and Join Counts</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="lab-6.html"><a href="lab-6.html#making-the-grid"><i class="fa fa-check"></i><b>7.2.1</b> Making the grid</a></li>
+<li class="chapter" data-level="7.2.2" data-path="lab-6.html"><a href="lab-6.html#creating-the-spatial-weights"><i class="fa fa-check"></i><b>7.2.2</b> Creating the spatial weights</a></li>
+<li class="chapter" data-level="7.2.3" data-path="lab-6.html"><a href="lab-6.html#conducting-a-join-counts-analysis"><i class="fa fa-check"></i><b>7.2.3</b> Conducting a join-counts analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="lab-6.html"><a href="lab-6.html#challenge-1-join-counts"><i class="fa fa-check"></i><b>7.3</b> Challenge 1: Join Counts</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="lab-6.html"><a href="lab-6.html#challenge-1a"><i class="fa fa-check"></i><b>7.3.1</b> Challenge 1a</a></li>
+<li class="chapter" data-level="7.3.2" data-path="lab-6.html"><a href="lab-6.html#challenge-1b"><i class="fa fa-check"></i><b>7.3.2</b> Challenge 1b</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="lab-6.html"><a href="lab-6.html#tutorial-2-social-vulnerability-and-morans-i"><i class="fa fa-check"></i><b>7.4</b> Tutorial 2: Social vulnerability and Moran’s I</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="lab-6.html"><a href="lab-6.html#download-the-data"><i class="fa fa-check"></i><b>7.4.1</b> Download the data</a></li>
+<li class="chapter" data-level="7.4.2" data-path="lab-6.html"><a href="lab-6.html#read-the-data-into-r"><i class="fa fa-check"></i><b>7.4.2</b> Read the data into R</a></li>
+<li class="chapter" data-level="7.4.3" data-path="lab-6.html"><a href="lab-6.html#change-the-projection"><i class="fa fa-check"></i><b>7.4.3</b> Change the projection</a></li>
+<li class="chapter" data-level="7.4.4" data-path="lab-6.html"><a href="lab-6.html#explore-the-data"><i class="fa fa-check"></i><b>7.4.4</b> Explore the data</a></li>
+<li class="chapter" data-level="7.4.5" data-path="lab-6.html"><a href="lab-6.html#creating-a-spatial-weights-matrix"><i class="fa fa-check"></i><b>7.4.5</b> Creating a spatial weights matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="lab-6.html"><a href="lab-6.html#challenge-2-your-own-spatial-analysis"><i class="fa fa-check"></i><b>7.5</b> Challenge 2: Your own spatial analysis</a></li>
+<li class="chapter" data-level="7.6" data-path="lab-6.html"><a href="lab-6.html#lab-6-show-me-something-new"><i class="fa fa-check"></i><b>7.6</b> Lab 6 Show me something new</a></li>
+<li class="chapter" data-level="7.7" data-path="lab-6.html"><a href="lab-6.html#lab-6-submission-check"><i class="fa fa-check"></i><b>7.7</b> Lab-6 submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="lab-7.html"><a href="lab-7.html"><i class="fa fa-check"></i><b>8</b> Lab 7</a><ul>
+<li class="chapter" data-level="8.1" data-path="lab-7.html"><a href="lab-7.html#lab-7-set-up"><i class="fa fa-check"></i><b>8.1</b> Lab 7 Set-Up</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="lab-7.html"><a href="lab-7.html#create-your-lab-7-project-file"><i class="fa fa-check"></i><b>8.1.1</b> Create your Lab 7 project file</a></li>
+<li class="chapter" data-level="8.1.2" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>8.1.2</b> Create your NoteBook file</a></li>
+<li class="chapter" data-level="8.1.3" data-path="lab-5.html"><a href="lab-5.html#style-guide"><i class="fa fa-check"></i><b>8.1.3</b> Style guide</a></li>
+<li class="chapter" data-level="8.1.4" data-path="lab-4.html"><a href="lab-4.html#download-and-run-packages"><i class="fa fa-check"></i><b>8.1.4</b> Download and run packages</a></li>
+<li class="chapter" data-level="8.1.5" data-path="lab-7.html"><a href="lab-7.html#sign-up-for-census-api"><i class="fa fa-check"></i><b>8.1.5</b> Sign up for Census API</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="lab-7.html"><a href="lab-7.html#tutorial-1-data-wrangling"><i class="fa fa-check"></i><b>8.2</b> Tutorial 1: Data Wrangling</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="lab-7.html"><a href="lab-7.html#loading-census-data-from-tidycensus"><i class="fa fa-check"></i><b>8.2.1</b> Loading census data from tidycensus</a></li>
+<li class="chapter" data-level="8.2.2" data-path="lab-7.html"><a href="lab-7.html#re-arranging-the-data"><i class="fa fa-check"></i><b>8.2.2</b> Re-arranging the data</a></li>
+<li class="chapter" data-level="8.2.3" data-path="lab-7.html"><a href="lab-7.html#converting-totals-to-percentages-densities"><i class="fa fa-check"></i><b>8.2.3</b> Converting totals to percentages / densities</a></li>
+<li class="chapter" data-level="8.2.4" data-path="lab-7.html"><a href="lab-7.html#plotting-the-data"><i class="fa fa-check"></i><b>8.2.4</b> Plotting the data</a></li>
+<li class="chapter" data-level="8.2.5" data-path="lab-7.html"><a href="lab-7.html#zooming-in"><i class="fa fa-check"></i><b>8.2.5</b> Zooming in</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="lab-7.html"><a href="lab-7.html#challenge-1"><i class="fa fa-check"></i><b>8.3</b> Challenge 1</a></li>
+<li class="chapter" data-level="8.4" data-path="lab-7.html"><a href="lab-7.html#tutorial-2-regression"><i class="fa fa-check"></i><b>8.4</b> Tutorial 2 Regression</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="lab-7.html"><a href="lab-7.html#basics"><i class="fa fa-check"></i><b>8.4.1</b> Basics</a></li>
+<li class="chapter" data-level="8.4.2" data-path="lab-7.html"><a href="lab-7.html#basic-regression"><i class="fa fa-check"></i><b>8.4.2</b> Basic regression</a></li>
+<li class="chapter" data-level="8.4.3" data-path="lab-7.html"><a href="lab-7.html#spatial-residuals"><i class="fa fa-check"></i><b>8.4.3</b> Spatial residuals</a></li>
+<li class="chapter" data-level="8.4.4" data-path="lab-7.html"><a href="lab-7.html#spatial-lag-model"><i class="fa fa-check"></i><b>8.4.4</b> Spatial lag model</a></li>
+<li class="chapter" data-level="8.4.5" data-path="lab-7.html"><a href="lab-7.html#plotting-the-results"><i class="fa fa-check"></i><b>8.4.5</b> Plotting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="lab-7.html"><a href="lab-7.html#challenge-2"><i class="fa fa-check"></i><b>8.5</b> Challenge 2</a></li>
+<li class="chapter" data-level="8.6" data-path="lab-7.html"><a href="lab-7.html#lab-7-show-me-something-new"><i class="fa fa-check"></i><b>8.6</b> Lab 7 Show me something new</a></li>
+<li class="chapter" data-level="8.7" data-path="lab-7.html"><a href="lab-7.html#lab-7-submission-check"><i class="fa fa-check"></i><b>8.7</b> Lab-7 submission check</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geog-364: Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Geog-364: Introduction to R</h1>
+<p class="author"><em>Helen Greatrex</em></p>
+<p class="date"><em>2020-12-07</em></p>
+</div>
+<div id="lab-1" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Lab 1</h1>
+<div id="introduction" class="section level2">
+<h2><span class="header-section-number">1.1</span> Introduction</h2>
+<div id="why-is-this-class-in-r" class="section level3">
+<h3><span class="header-section-number">1.1.1</span> Why is this class in R?</h3>
+<p>There are many different types of software one can use to analyze spatial data. We’re going to focus on the R programming language because:</p>
+<ol style="list-style-type: lower-alpha">
+<li>It’s free and open source.</li>
+<li>It allows you to do traditional statistics, machine learning and data analysis.</li>
+<li>It’s a good introduction to programming, which is great for your resume.</li>
+<li>There are some very cool visualization tools including
+<ul>
+<li><a href="https://rmarkdown.rstudio.com/">RMarkdown</a>, <a href="https://bookdown.org/yihui/blogdown/">Blogdown</a> and <a href="https://bookdown.org/">Bookdown</a>, where you can integrate R analysis into your papers, blogs and websites. For example, this lab book is written in Bookdown.</li>
+<li><a href="https://shiny.rstudio.com/">RShiny</a> for very cool interactive dashboards</li>
+<li><a href="https://rstudio.github.io/leaflet/">Leaflet</a> and <a href="https://rpubs.com/nickbearman/r-google-map-making">RGoogleMaps</a> where you can use beautiful map making tools</li>
+</ul></li>
+</ol>
+<p>You will hopefully be exposed to all of these things throughout the course of the semester.</p>
+</div>
+<div id="what-are-r-and-r-studio" class="section level3">
+<h3><span class="header-section-number">1.1.2</span> What are R and R-studio?</h3>
+<p><strong>R</strong> is a programming language commonly used by statisticians and scientists across the world. It can be used to analyse data, to visualise results and to develop new software. It is commonly used in spatial analysis because it is powerful and free, plus it allows you to combine spatial analysis with more traditional statistics.</p>
+<p>When I say R is a programming language, I mean that it is a collection of commands that you can type into the computer in order to analyse and visualise your data. Think of it literally like a language like Spanish or Hindi, so learning it means learning vocabulary and grammar to communicate with your computer. It also means it will get easier with experience and practice..</p>
+<p>When you install R on your computer, you are essentially teaching the computer what those the language means along with some very basic Notepad-like software where you could enter the commands.</p>
+<div class="figure"><span id="fig:Rscreenshot"></span>
+<img src="images/Fig_1_1RScreenshot.png" alt="The basic R screen" width="686" />
+<p class="caption">
+Figure 1.1: The basic R screen
+</p>
+</div>
+<p>More recently, <strong>R-studio</strong> has been designed as a piece of software to make it easier to programme in R. It’s what Microsoft Word is compared to notepad - lots more functionality and things to click. For example, you can easily see help files, run code, see your output and link to all the website/dashboard builders.</p>
+<p>In this course, we are going to use R-Studio as the main software, but you don’t <em>need</em> it if one day you only have access to R.</p>
+<div class="figure"><span id="fig:Rstudio"></span>
+<img src="images/Fig_1_2BasicRstudio.png" alt="The basic R-studio screen. Here is the R-Studio website where you can explore some of its features: https://rstudio.com/products/rstudio/features/" width="1279" />
+<p class="caption">
+Figure 1.2: The basic R-studio screen. Here is the R-Studio website where you can explore some of its features: <a href="https://rstudio.com/products/rstudio/features/" class="uri">https://rstudio.com/products/rstudio/features/</a>
+</p>
+</div>
+</div>
+<div id="what-are-r-markdown-r-shiny" class="section level3">
+<h3><span class="header-section-number">1.1.3</span> What are R-Markdown &amp; R-Shiny?</h3>
+<p>In recent years, people have developed new software in R to allow you to include your analysis in some pretty sophisticated outputs.</p>
+<p><strong>RMarkdown</strong> is an document written in R, where you can combine code, results, equations and text (and photos/video etc). Essentially R-Markdown is a way to tell a story along with your data analysis, without having to copy and paste screen-shots of diagrams. This will be how you write up your lab reports.</p>
+<p>R-Markdown also goes beyond just interactive documents:</p>
+<ul>
+<li><strong>RBookdown</strong> is a book written in RMarkdown. It is how I wrote this help document</li>
+<li><strong>RBlogdown</strong> is a blog written in RMarkdown</li>
+<li>You can also make entire interactive websites in R-Markdown</li>
+</ul>
+<p>You can see examples and more details about R-markdown here: <a href="https://rmarkdown.rstudio.com/gallery.html" class="uri">https://rmarkdown.rstudio.com/gallery.html</a></p>
+<p><strong>RShiny</strong> allows you to make interactive applications and tools in R. Here are some examples: <a href="https://shiny.rstudio.com/gallery/" class="uri">https://shiny.rstudio.com/gallery/</a></p>
+</div>
+</div>
+<div id="installing-r-and-r-studio" class="section level2">
+<h2><span class="header-section-number">1.2</span> Installing R and R-studio</h2>
+<p>In this class, we would like you to download and install both R and R-Studio onto your own computers.</p>
+<p><strong>If the labs are causing major problems with your computer or your computer hardware is struggling (or you have any other software issue), Talk to Dr Greatrex</strong>. We can definitely fix this and there are other options for “online R” that you can use. As these all have their own issues, getting it installed on your computer is likely easiest and the one I would like you to try first.</p>
+<p>In general, you can reach out to any of the teaching staff if you have any issue at all - we have likely see the errors hundreds of times before and we are happy to help.</p>
+<div id="i-have-rr-studio-installed-already" class="section level3">
+<h3><span class="header-section-number">1.2.1</span> I have R/R-studio installed already</h3>
+<p>It’s great you have them installed! Many of the packages that we are using rely on the most up-to-date version of R and R-studio, so please update them to the latest version. To do this, follow these instructions: <a href="https://uvastatlab.github.io/phdplus/installR.html#updateR" class="uri">https://uvastatlab.github.io/phdplus/installR.html#updateR</a></p>
+<p>(If you know this will lead to issues on another project, talk to Dr Greatrex before you do anything).</p>
+</div>
+<div id="installing-rr-studio-for-the-first-time" class="section level3">
+<h3><span class="header-section-number">1.2.2</span> Installing R/R-studio for the first time</h3>
+<p>You need to install two new software programs, one called R and and called R-Shiny.</p>
+<p>You can click here for written instructions: <a href="https://psu.instructure.com/courses/2057289/pages/how-to-install-or-update-r-and-r-studio?module_item_id=30182767" class="uri">https://psu.instructure.com/courses/2057289/pages/how-to-install-or-update-r-and-r-studio?module_item_id=30182767</a></p>
+<p>Or follow these two installation tutorials in video format:</p>
+<p>To install R, follow this video:</p>
+<p><a href="http://vimeo.com/203516510" title="Installing R"><img src="images/VIDEO1.png" alt="Installing R" /></a></p>
+<p>To install R-studio, follow this video:</p>
+<p><a href="http://vimeo.com/203516968" title="Installing R-Studio"><img src="images/VIDEO2.png" alt="Installing R-Studio" /></a></p>
+</div>
+</div>
+<div id="getting-started" class="section level2">
+<h2><span class="header-section-number">1.3</span> Getting started</h2>
+<div id="open-r-studio" class="section level3">
+<h3><span class="header-section-number">1.3.1</span> Open R-studio</h3>
+<div class="figure"><span id="fig:rrstudio"></span>
+<img src="images/Fig_1_3RRstudio.png" alt="Icons of the R program and R-studio" width="716" />
+<p class="caption">
+Figure 1.3: Icons of the R program and R-studio
+</p>
+</div>
+<p><strong>Open R-studio</strong> (NOT R!). You should be greeted by three panels:</p>
+<ul>
+<li>The interactive R console (entire left)</li>
+<li>Environment/History (tabbed in upper right)</li>
+<li>Files/Plots/Packages/Help/Viewer (tabbed in lower right)</li>
+</ul>
+<p>If you click on the View/Panes/Pane Layout menu item, you can move these around. I tend to like the console to be top left and scripts to be top right, with the plots and environment on the bottom - but this is totally personal choice.</p>
+<div class="figure"><span id="fig:basicStudio"></span>
+<img src="images/Fig_1_4Rstudio.png" alt="The basic R-studio screen when you log on" width="741" />
+<p class="caption">
+Figure 1.4: The basic R-studio screen when you log on
+</p>
+</div>
+<p>If you wish to learn more about what these windows do, have a look at this resource, from the Pirates Guide to R: <a href="https://bookdown.org/ndphillips/YaRrr/the-four-rstudio-windows.html" class="uri">https://bookdown.org/ndphillips/YaRrr/the-four-rstudio-windows.html</a></p>
+<p><strong>If you have used R before, you might see that there are variables and plots etc already loaded</strong>. It is always good to clear these before you start a new analysis. To do this, click the little broom symbol in your environment tab.</p>
+</div>
+<div id="change-a-few-settings" class="section level3">
+<h3><span class="header-section-number">1.3.2</span> Change a few settings</h3>
+<p>R-studio wants to be helpful and will try to re-load exactly where you were in a project when you log back in. This can get really confusing, so we are going to turn this off.</p>
+<p>ON A MAC: Click on the R-studio menu button on the top left of the screen, then click Preferences.</p>
+<p>ON A PC: Click on Tools-&gt; Global Options -&gt; Preferences</p>
+<p>Now:</p>
+<ul>
+<li>UNCLICK “Restore most recently opened project at startup”</li>
+<li>UNCLICK “Restore .RData into workspace at startup”</li>
+<li>Set “Save workspace to .RData on” exit to Never</li>
+</ul>
+<div class="figure"><span id="fig:Options"></span>
+<img src="images/Fig_1_5Options.png" alt="Change these 3 options, then press Apply and OK" width="580" />
+<p class="caption">
+Figure 1.5: Change these 3 options, then press Apply and OK
+</p>
+</div>
+</div>
+<div id="project" class="section level3">
+<h3><span class="header-section-number">1.3.3</span> Create an R-project</h3>
+<p>We are going to use R-projects to store our lab data in. An R project is a place to store all your commands, data and output in the same place. R will know that it is all linked.</p>
+<p>This is useful because say you have Lab-2 open, but want to re-open Lab-1 to check some code, clicking the “Lab 1 project file” will load a whole new version of R with everything you did for Lab 1.</p>
+<p>It is <strong><em>really</em></strong> important that you stay organised in this course, for example making sure you know where you put your data and your labs. You will return to them in your final project, so it pays to be organised now.</p>
+<p><strong>To encourage this, choose a place that makes sense on your computer, create a folder called GEOG364.You can either do this outside R studio in your file explorer, or inside the “Files tab” in R studio. You should store all your 364 files inside this folder</strong></p>
+<p>Now we will create our first project (also see the pic):</p>
+<ul>
+<li>open R-Studio and click <code>New Project</code>,</li>
+<li>then click “new directory”</li>
+<li>then “new project”.</li>
+<li>Name your project Lab 1, then browse to your newly created GEOG364 folder and press open.</li>
+<li>Press OK and your project is created.</li>
+</ul>
+<div class="figure"><span id="fig:project"></span>
+<img src="images/Fig_1_6Project.png" alt="Instructions to create an R project" width="1453" />
+<p class="caption">
+Figure 1.6: Instructions to create an R project
+</p>
+</div>
+<p>Your output should look something like this:</p>
+<div class="figure"><span id="fig:projectout"></span>
+<img src="images/Fig_1_7FinalOutput.png" alt="Your screen after running the project" width="1168" />
+<p class="caption">
+Figure 1.7: Your screen after running the project
+</p>
+</div>
+<p>Equally, R should now be “looking” inside your Lab 1 folder, making it easier to find your data and output your results. Try typing this into the console (INCLUDING THE PARANTHESES/BRACKETS) and see if it prints out the location of Lab 1.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1"></a><span class="kw">getwd</span>()</span></code></pre></div>
+<div id="if-youre-having-issues-at-this-point-or-havent-managed-to-get-to-this-step-stop-ask-dr-greatrex-saumya-or-harman-for-help." class="section level5 unnumbered">
+<h5>If you’re having issues at this point or haven’t managed to get to this step, STOP! Ask Dr Greatrex, Saumya or Harman for help.</h5>
+</div>
+</div>
+</div>
+<div id="lab-challenge-1" class="section level2">
+<h2><span class="header-section-number">1.4</span> Lab challenge 1</h2>
+<p>Now you have opened your project, take a screenshot of your R-studio page. It should look like Figure <a href="index.html#fig:projectout">1.7</a>, e.g. with at least R version 4.0.2, with the Lab 1 project and the project stored in your GEOG-364 folder.</p>
+<ul>
+<li>To take a screenshot on a mac, press Command-3. The sreenshot will appear on your desktop</li>
+<li>To take a screenshot on a PC, press Alt + PrtScn</li>
+</ul>
+<p>Rename the screenshot to your “username_Lab1_Fig1”(for example for me it will be hlg5155_Lab1_Fig1), then place it in your Lab 1 sub-folder inside GEOG-364. This folder was created when you made the project</p>
+<p>You will need this later, so don’t skip this step.</p>
+</div>
+<div id="r-coding-basics" class="section level2">
+<h2><span class="header-section-number">1.5</span> R coding basics</h2>
+<p>So now we FINALLY get to do some R-coding.</p>
+<div id="basic-arithmatic" class="section level3">
+<h3><span class="header-section-number">1.5.1</span> Basic arithmatic</h3>
+<p>Remember that the aim of R is to type in commands to get R to analyse data.</p>
+<p>The console (see Figure <a href="index.html#fig:basicStudio">1.4</a>) is a space where you can type in those commands and it will directly print out the answer. You’re essentially talking to the computer. The little “&gt;” symbol in the console means that the computer is waiting for your command.</p>
+<p>The simplest thing we could do in R is do arithmetic. Click on the console and try typing the following. Press enter and R will calculate the answer.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1"></a><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="dv">100</span></span></code></pre></div>
+<pre><code>## [1] 101</code></pre>
+<p>It should look something like this:</p>
+<div class="figure"><span id="fig:maths"></span>
+<img src="images/Fig_1_8Maths.png" alt="Starting to enter commands in the console. I choose the sum 1+1" width="1327" />
+<p class="caption">
+Figure 1.8: Starting to enter commands in the console. I choose the sum 1+1
+</p>
+</div>
+<p>When using R as a calculator, the order of operations is the same as you would have learned back in school, so use brackets to force a different order. For example, try typing in each of the the commands below (in grey)</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="index.html#cb4-1"></a><span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 13</code></pre>
+<p>will give a different result to</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="index.html#cb6-1"></a>(<span class="dv">3</span> <span class="op">+</span><span class="st"> </span><span class="dv">5</span>) <span class="op">*</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<pre><code>## [1] 16</code></pre>
+<p>Really small or large numbers get a scientific notation:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="index.html#cb8-1"></a><span class="dv">2</span><span class="op">/</span><span class="dv">10000</span></span></code></pre></div>
+<pre><code>## [1] 2e-04</code></pre>
+<p>The e is shorthand for “multiplied by <span class="math inline">\(10^{X}\)</span>”. So 2e-4 is shorthand for <span class="math inline">\(2\times10^{-4}\)</span></p>
+<div id="what-if-i-press-enter-too-soon" class="section level5 unnumbered">
+<h5>What if I press Enter too soon?</h5>
+<p>If you type in an incomplete command, R will wait for you to complete it. For example, if you type
+<code>1 +</code> and press enter, R will know that you need to complete the command So it will move onto the next line but the <code>&gt;</code> will have changed into a <code>+</code>, which means its waiting for you to complete the command.</p>
+<p><strong>If you want to cancel a command you can simply hit the “Esc” key and R studio will reset.</strong></p>
+<p>Pressing escape isn’t only useful for killing incomplete commands: you can also use it to tell R to stop running code (for example if it’s taking much longer than you expect), or to get rid of the code you’re currently writing.</p>
+</div>
+</div>
+<div id="comparing-things" class="section level3">
+<h3><span class="header-section-number">1.5.2</span> Comparing things</h3>
+<p>We can also do comparisons in R. Here we are asking R whether 1 is equal to 1.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="index.html#cb10-1"></a><span class="co"># note two equals signs is read as &quot;is equal to&quot;</span></span>
+<span id="cb10-2"><a href="index.html#cb10-2"></a><span class="dv">1</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span>  </span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="index.html#cb12-1"></a><span class="co"># inequality (read as &quot;is not equal to&quot;)</span></span>
+<span id="cb12-2"><a href="index.html#cb12-2"></a><span class="dv">1</span> <span class="op">!=</span><span class="st"> </span><span class="dv">2</span>  </span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="index.html#cb14-1"></a><span class="co"># less than</span></span>
+<span id="cb14-2"><a href="index.html#cb14-2"></a><span class="dv">3</span> <span class="op">&lt;</span><span class="st"> </span><span class="dv">2</span> </span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="index.html#cb16-1"></a><span class="co"># less than or equal to</span></span>
+<span id="cb16-2"><a href="index.html#cb16-2"></a><span class="dv">1</span> <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>  </span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="index.html#cb18-1"></a><span class="co"># greater than</span></span>
+<span id="cb18-2"><a href="index.html#cb18-2"></a><span class="dv">1</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>  </span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="index.html#cb20-1"></a><span class="co"># greater than or equal to</span></span>
+<span id="cb20-2"><a href="index.html#cb20-2"></a><span class="dv">1</span> <span class="op">&gt;=</span><span class="st"> </span><span class="dv">-9</span> </span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="variables-and-assignment" class="section level3">
+<h3><span class="header-section-number">1.5.3</span> Variables and assignment</h3>
+<p>It’s great to be able to do maths easily on the screen, but really we want to be able to save our results, or load in data tables etc, so we can do more complex commands.</p>
+<p>In R, we can give things a name. This is called a variable. So then, instead of typing the whole command, we can simply type its name and R will recall the answer.</p>
+<p>The way we store data into a variable is using the assignment arrow <code>&lt;-</code>, which is made up of the left arrow and a dash. You can also use the equals sign, but it can cause complications later on. Try typing this command into the console.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="index.html#cb22-1"></a>x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">/</span><span class="dv">40</span></span></code></pre></div>
+<p>Notice that pressing enter did not print a value onto your screen as it did earlier. Instead, we stored it for later in something called a variable, with the name ‘x’.</p>
+<p>So our variable <code>x</code> is now associated with the value 0.025, or 1/40. You can print a variable on screen by typing its name, no quotes, or by using the print command. Try printing out your variable. You can do this in two ways, either by typing its name, or by using the print command.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="index.html#cb23-1"></a>x</span></code></pre></div>
+<pre><code>## [1] 0.025</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="index.html#cb25-1"></a><span class="kw">print</span>(x)</span></code></pre></div>
+<pre><code>## [1] 0.025</code></pre>
+<p>Look for the Environment tab in one of the panes of RStudio, and you will see that ‘x’ and its value have appeared. This ‘x’ variable can be used in place of a number in any calculation that expects a number. Try typing</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="index.html#cb27-1"></a><span class="kw">log</span>(x)</span></code></pre></div>
+<pre><code>## [1] -3.688879</code></pre>
+<p>Notice also that variables can be reassigned:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="index.html#cb29-1"></a>x &lt;-<span class="st"> </span><span class="dv">100</span></span>
+<span id="cb29-2"><a href="index.html#cb29-2"></a><span class="kw">print</span>(x)</span></code></pre></div>
+<pre><code>## [1] 100</code></pre>
+<p>x used to contain the value 0.025 and and now it has the value 100.</p>
+<p><em>Note, the letter x isn’t special in any way, it’s just a variable name. You can replace it with any word you like as long as it contains no spaces and doesn’t begin with a number</em>. Different people use different conventions for long variable names, these include</p>
+<ul>
+<li>periods.between.words.1</li>
+<li>underscores_between_words</li>
+<li>camelCaseToSeparateWords</li>
+</ul>
+<p>What you use is up to you, but be consistent.</p>
+<div id="combining-variables" class="section level5 unnumbered">
+<h5>Combining variables</h5>
+<p>You can now use multiple variables together in more complex commands. For example, try these commands:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="index.html#cb31-1"></a><span class="co">#Take the variable x, add 1 then save it to a new variable called y</span></span>
+<span id="cb31-2"><a href="index.html#cb31-2"></a>y &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span> </span>
+<span id="cb31-3"><a href="index.html#cb31-3"></a><span class="co"># print the multiple of 2yx onto the screen</span></span>
+<span id="cb31-4"><a href="index.html#cb31-4"></a>y</span></code></pre></div>
+<pre><code>## [1] 101</code></pre>
+<p>Now you can see that there are two variables in your environment tab, x and y. Where y is the sum of the contents of x plus 1.</p>
+<p>**The way R works is that first it looks for the commands on the right of the arrow. It runs all of them, calculates the result, then saves that result with the name on the left of the arrow.</p>
+<p>The right hand side of the assignment (right of the <code>&lt;-</code>) can be any valid R command. The right hand side is fully evaluated before any assignment occurs.The variable only saves the result, not the command itself.</p>
+<p>You can even use this to change your original variable . Try typing the code below in a few times into the console and see what happens.</p>
+<p><strong>A short cut to do this is to type the commands the first time, then use the up-arrow on your keyboard to cycle back through previous commands you have typed</strong></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="index.html#cb33-1"></a>x &lt;-<span class="st"> </span>x <span class="op">+</span><span class="st"> </span><span class="dv">1</span> <span class="co">#notice how RStudio updates its description of x on the top right tab</span></span>
+<span id="cb33-2"><a href="index.html#cb33-2"></a>x <span class="co"># print the contents of &quot;x&quot; onto the screen</span></span></code></pre></div>
+<pre><code>## [1] 101</code></pre>
+<p>Our variables don’t have to be numbers. They could refer to tables of data, or a spatial map, or any other complex things. We will cover this more in future labs.</p>
+</div>
+</div>
+<div id="functions" class="section level3">
+<h3><span class="header-section-number">1.5.4</span> Functions</h3>
+<p>The power of R lies in its many thousands of built in commands, or <em>functions</em>. In fact, we have already come across one - the print command. Some more examples include:</p>
+<ul>
+<li><code>plot(x=1:10,y=1:10)</code>
+<ul>
+<li>This will plot the numbers 1 to 10 against 1 to 10</li>
+</ul></li>
+<li><code>x &lt;- nchar("hello")</code>
+<ul>
+<li>This will count the number of letters in the word “hello” (e.g. 5), then save it as a variable called x</li>
+</ul></li>
+</ul>
+<p>Watch this short video to learn three important facts about functions:</p>
+<p><a href="http://vimeo.com/220490105" title="Installing R-Studio"><img src="images/VIDEO3.png" alt="Function basics" /></a></p>
+<p>The <code>file.choose()</code> command will let you interactively select a file and print the address out onto the screen. Try each of these out in your console for the file.choose() command:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="index.html#cb35-1"></a><span class="co"># Typing this into the console will print out the underlying code</span></span>
+<span id="cb35-2"><a href="index.html#cb35-2"></a>file.choose </span>
+<span id="cb35-3"><a href="index.html#cb35-3"></a></span>
+<span id="cb35-4"><a href="index.html#cb35-4"></a><span class="co"># Typing it WITH parentheses will run the command</span></span>
+<span id="cb35-5"><a href="index.html#cb35-5"></a><span class="kw">file.choose</span>()</span>
+<span id="cb35-6"><a href="index.html#cb35-6"></a></span>
+<span id="cb35-7"><a href="index.html#cb35-7"></a><span class="co"># Typing a ? in front will open the help file for that command</span></span>
+<span id="cb35-8"><a href="index.html#cb35-8"></a>?file.choose</span></code></pre></div>
+<p><strong>The round brackets/parentheses after the name ( ), mean that it is a command.</strong></p>
+<p>Sometimes we need to give the command some additional information. Anything we wish to tell the command should be included inside the inside the parentheses (separated by commas). The command will literally only know about the stuff inside the parentheses.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="index.html#cb36-1"></a><span class="kw">sin</span>(<span class="dv">1</span>) <span class="co"># trigonometry functions.  Apply the sine function to the number 1. </span></span></code></pre></div>
+<pre><code>## [1] 0.841471</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="index.html#cb38-1"></a><span class="kw">log</span>(<span class="dv">10</span>) <span class="co"># natural logarithm.  Take the natural logarithm of the number 10. </span></span></code></pre></div>
+<pre><code>## [1] 2.302585</code></pre>
+<p>This following command will plot the number 1 to 10 against the numbers 12 to 20, along with some axis labels. When you run this, the plot will show up in the plots tab.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="index.html#cb40-1"></a><span class="kw">plot</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">11</span><span class="op">:</span><span class="dv">20</span>,<span class="dt">col=</span><span class="st">&quot;dark blue&quot;</span>, <span class="dt">xlab=</span><span class="st">&quot;x values&quot;</span>,<span class="dt">ylab=</span><span class="st">&quot;GEOG-364 is the best&quot;</span>) </span></code></pre></div>
+<p><img src="GEOG364Labs_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="index.html#cb41-1"></a><span class="co"># plot the numbers 1 to 10 against the numbers 11 to 20</span></span></code></pre></div>
+<div id="command-help" class="section level4">
+<h4><span class="header-section-number">1.5.4.1</span> Command help</h4>
+<p>As mentioned above, typing a ? before the name of a command or function will open the help page for that command in the “environment” box on your screen. As well as providing a detailed description of the command and how it works, scrolling to the bottom of the help page will usually show a worked example of the code which you can copy into the console. You can then copy these line by line into the console to understand what is happening.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="index.html#cb42-1"></a><span class="co">## This provides the help page for file.choose.</span></span>
+<span id="cb42-2"><a href="index.html#cb42-2"></a>?file.choose   </span></code></pre></div>
+<div class="figure"><span id="fig:help"></span>
+<img src="images/Fig_1_7help.png" alt="What you should see after typing ?file.choose" width="1268" />
+<p class="caption">
+Figure 1.9: What you should see after typing ?file.choose
+</p>
+</div>
+</div>
+</div>
+<div id="packages" class="section level3">
+<h3><span class="header-section-number">1.5.5</span> Packages</h3>
+<p>There are now several million commands/functions available for you to use in R. To make sure your computer doesn’t get overwhelmed, it doesn’t load all of these at once. In fact many need to be downloaded from the internet.</p>
+<p>A close analogy is your phone. There are several million things you can do on your phone, which are collated into bundles called apps. To use the features in an app, you need to click on the icon of the app to load it. Equally you need to download many apps from the internet to start with.</p>
+<p>So we have</p>
+<ul>
+<li>R: The programming language itself</li>
+<li>Functions: Which are specific commands or actions written in the R language</li>
+<li>Packages: Commands are grouped into bundles called packages, which we need to load every time.</li>
+</ul>
+<p>This mini video and tutorial also explains things clearly. Click on the link, work thorugh it and we will install our own packages in the next lab.</p>
+<p><a href="https://learnr-examples.shinyapps.io/ex-setup-r/#section-install-packages" title="Installing packages"><img src="images/VIDEO4.png" alt="Installing packages" /></a></p>
+</div>
+<div id="coding-help" class="section level3">
+<h3><span class="header-section-number">1.5.6</span> Coding help</h3>
+<p>Don’t worry about trying to remember every function in R. In this course, you will be provided with most of the functions you need, but you can also simply look up what you need on Google.</p>
+<p>This cartoon from XKCD is a pretty normal way to think about programming! One of the most important skills you can learn as a programmer is how to effectively google the information you need…</p>
+<div class="figure"><span id="fig:xkcd"></span>
+<img src="images/Fig_1_6XKCD.png" alt="https://xkcd.com/627/" width="366" />
+<p class="caption">
+Figure 1.10: <a href="https://xkcd.com/627/" class="uri">https://xkcd.com/627/</a>
+</p>
+</div>
+</div>
+</div>
+<div id="lab-challenge-2" class="section level2">
+<h2><span class="header-section-number">1.6</span> Lab Challenge 2</h2>
+<p>Now we are going to download some packages from the internet and install them. You must be connected to the internet to make this happen! In the console, type the following commands, or click the “Install” button in the packages tab (next to plots) and find the package name. If it asks if you want to install dependencies, say yes.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="index.html#cb43-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;knitr&quot;</span>)</span>
+<span id="cb43-2"><a href="index.html#cb43-2"></a><span class="kw">install.packages</span>(<span class="st">&quot;rmarkdown&quot;</span>)</span>
+<span id="cb43-3"><a href="index.html#cb43-3"></a><span class="kw">install.packages</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<p>You will see a load of red text appear in the console as it tells you its very detailed status of how it’s downloading and installing. Don’t panic! It might also take several minutes to do this, longer on a bad internet connection.</p>
+<p>When you have typed all three commands and waited until they have finished running (remember, when it is done, you should see the little “&gt;” symbol in the console waiting for your next command), we want to check if they have installed successfully onto your computer.</p>
+<p>To do this we are going to load them using the library command:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="index.html#cb44-1"></a><span class="kw">library</span>(<span class="st">&quot;knitr&quot;</span>)</span>
+<span id="cb44-2"><a href="index.html#cb44-2"></a><span class="kw">library</span>(<span class="st">&quot;rmarkdown&quot;</span>)</span>
+<span id="cb44-3"><a href="index.html#cb44-3"></a><span class="kw">library</span>(<span class="st">&quot;tidyverse&quot;</span>)</span></code></pre></div>
+<p>If you have managed to install them successfully, often nothing happens - this is great! It means it loaded the package without errors.</p>
+<p>Sometimes, it will tell you friendly messages. For example, this is what shows up when you install the tidyverse package. It is telling you the sub-packages that it downloaded and also that some commands, like filter - now have a different meaning. E.g. originally the filter command did one thing, but now the tidyverse package has made filter do something else.</p>
+<div class="figure"><span id="fig:tidyverse"></span>
+<img src="images/Fig_1_15Tidyverse.png" alt="Tidyverse install messages" width="766" />
+<p class="caption">
+Figure 1.11: Tidyverse install messages
+</p>
+</div>
+<p>To find out if what you are seeing is a friendly message or an error, run the command again. If you run it a second time, then nothing should happen.</p>
+<p>! <strong>IMPORTANT</strong> If you see some red errors here after mulitple attempts running the commands, we will have to fix what your computer is doing together. If you see errors, then take a screenshot of the full page and talk to a TA or Dr Greatrex, or post on piazza under the Lab 1 tab.</p>
+</div>
+<div id="create-a-r-markdown-document" class="section level2">
+<h2><span class="header-section-number">1.7</span> Create a R-Markdown document</h2>
+<div id="what-is-markdown" class="section level3">
+<h3><span class="header-section-number">1.7.1</span> What is markdown?</h3>
+<p>So far, we’ve been typing commands into the console, but these will all be lost once you close R. Equally, it’s hard to remember or reproduce the analysis you have done . So we will now move onto writing code commands that you can save and submit.</p>
+<p>There are several types of document that you can create and save in R-Studio.</p>
+<ul>
+<li><p>A basic script (the filetype is .r). This is simply just a blank document where you can save code commands (a script is shown in (Figure <a href="index.html#fig:Rscreenshot">1.1</a>)). When you “run” the commands in the script, R simply copy/pastes the commands over to the console.</p></li>
+<li><p>An R-Notebook or Markdown document (the filetype is .Rmd). These are documents you can use to write a report with normal text/pictures, but and also include both your R code and output. You can turn these into reports, websites, blogs, presentations or applications. For example these instructions are created using a markdown document.</p></li>
+</ul>
+<p>In this course we are going to focus on the R-Notebook format. Watch this 1 min video covers markdown files and leads to a comprehensive guide on how to create them. Markdown and Notebook files are almost identical, so I will use the terms interchangeably for now.</p>
+<p><a href="https://rmarkdown.rstudio.com/lesson-1.html" target="_blank" title="1 min Markdown Tutorial"><img src="images/VIDEO5.png" alt="1 min Markdown Tutorial" /></a></p>
+</div>
+<div id="creating-a-notebook-document" class="section level3">
+<h3><span class="header-section-number">1.7.2</span> Creating a notebook document</h3>
+<p>Time to make your own. Go to the File menu on the top left, then click New File - Notebook. A file should appear on your screen - your first notebook script. Essentially, we have some space for text, some space for code, and a space at the top of the file where we can add information about themes/styles etc.</p>
+<div class="figure"><span id="fig:markdown"></span>
+<img src="images/Fig_1_10Markdown.png" alt="You should see TWO new files appear in your lab 1 folder" width="972" />
+<p class="caption">
+Figure 1.12: You should see TWO new files appear in your lab 1 folder
+</p>
+</div>
+<p>If you click on the little right triangle arrow at the top-right of the code chunk, you can run the plot command, and a picture will appear, running the code. Note, it no longer runs in the console. You can still copy things into the console, by clicking on the line you want to run and pressing Ctrl-Enter / command-Enter.</p>
+<p>Let’s try this. On line 11, delete <code>plot(cars)</code> and type <code>1+1</code>. Now press the green arrow and the answer should appear directly under your code chunk.</p>
+<p>Now click at the end of the script, around line 20 and press the green insert button (top right in the script menu icons). Insert a new R code chunk. Inside, type <code>1+2</code> and run it. So you can see that you can have text/pictures/videos etc, and code chunks interspersed throughout it.</p>
+<p>Finally, click on the script then press the save button. Save it as GEOG364_Lab1_PSU.ID e.g. GEOG364_Lab1_hlg5155</p>
+<p>You will see two files appear in your files tab, and your Lab_1 folder. Click on the LabScript1_abc9999.nb.html file then it will open in your file browser - you should see your code output and your formatted text. You have made your first R-html output - congrats!</p>
+<p><strong>IMPORTANTLY - If you don’t “run” each code chunk by clicking the arrow, or clicking the run-all button in the top right, then that code won’t run in your final html output that we grade. If that is the case we can’t see if the code works and cannot award you the marks! SO - get in the habit of pressing “run-all” before you submit your final html file</strong></p>
+<div class="figure"><span id="fig:rmdtwo"></span>
+<img src="images/Fig_1_9Rmd.png" alt="You should see TWO new files appear in your lab 1 folder" width="1673" />
+<p class="caption">
+Figure 1.13: You should see TWO new files appear in your lab 1 folder
+</p>
+</div>
+</div>
+<div id="Format" class="section level3">
+<h3><span class="header-section-number">1.7.3</span> Text formatting (in the white area)</h3>
+<p>If you want to make bold/italic/underline text formatting, or to create section headings in your text, you need a few more commands. Remember, this is for the text in your final report in the white area - only R commands go in each code chunk!</p>
+<p>You need to press enter twice to start a new paragraph.</p>
+<p>As another example, if you type
+<code>*TEXT*</code>, you will see <em>TEXT</em></p>
+<p>On a new line if you type</p>
+<p><code># this is a new section header</code>, then R will interpret that as a new chapter or section header and change the font accordingly. Here is what this text looks like in my script:</p>
+<div class="figure"><span id="fig:format"></span>
+<img src="images/Fig_1_12Format.png" alt="My writing" width="878" />
+<p class="caption">
+Figure 1.14: My writing
+</p>
+</div>
+<p>The easiest way to learn these is to click the Help/Markdown Quick Reference Menu, which will bring up a cheat-sheet with all the formatting. Although this feels like a pain, it’s actually useful because it makes it very easy for R to change the formatting depending on what output format you need.</p>
+<div class="figure"><span id="fig:cheat"></span>
+<img src="images/Fig_1_11Cheatsheet.png" alt="Bringing up the formatting cheatsheet" width="1181" />
+<p class="caption">
+Figure 1.15: Bringing up the formatting cheatsheet
+</p>
+</div>
+<p><strong>THERE IS ALSO A SPELL-CHECKER NEXT TO THE SAVE BUTTON - REMEMBER TO USE IT!</strong></p>
+</div>
+</div>
+<div id="friend" class="section level2">
+<h2><span class="header-section-number">1.8</span> “Friendly text”</h2>
+<p>Much of what you see on your screen when you open a notebook document is simply a friendly introduction to RStudio.</p>
+<p>So your notebook file is essentially a Word document with the ability to add in “mini R-consoles”, AKA your code chunks. Imagine every time you opened a new word document, it included some “friendly text” (<em>“hi, this is a word document, this is how you do bold text, this is how you save”</em>). This is great the first time you ever use Word, but kind of a pain after that.</p>
+<p>RStudio actually does this. Every time you open a notebook file, you actually <em>do</em> get this friendly text, explaining how to use a notebook file. Read it, make sure you understand what it is telling you, then delete all of it. So delete from line 6 to the end. The stuff left over is your YAML code which tells R how to create the final html file. DON’T TOUCH THAT.</p>
+<div class="figure"><span id="fig:friendly"></span>
+<img src="images/Fig_1_16Friendlytext.png" alt="You should see TWO new files appear in your lab 1 folder" width="910" />
+<p class="caption">
+Figure 1.16: You should see TWO new files appear in your lab 1 folder
+</p>
+</div>
+</div>
+<div id="lab-challenge-3" class="section level2">
+<h2><span class="header-section-number">1.9</span> Lab Challenge 3</h2>
+<p>Your final challenge.</p>
+<ol style="list-style-type: decimal">
+<li><p>Delete all the “friendly text” in your script - you should be just left with your YAML code and a blank file (see previous section)</p></li>
+<li><p>Create a new level-1 section header called “R-Basics”, then press enter a few times (or your header will not work). See the formatting help if you are not sure how.</p></li>
+</ol>
+<div class="figure"><span id="fig:space"></span>
+<img src="images/Fig_1_13Space.png" alt="Remember to add a blank line BEFORE AND AFTER your headings" width="800" />
+<p class="caption">
+Figure 1.17: Remember to add a blank line BEFORE AND AFTER your headings
+</p>
+</div>
+<ul>
+<li><p>Now in the space below your header, add an interesting fact or something you learned about R. Write part of your fact in bold text.</p></li>
+<li><p>Below the text, add a code chunk and include some code of your choice that runs without an error. AT A MINIMUM, YOUR CODE CHUNK SHOULD INCLUDE</p>
+<ul>
+<li>Applying a function to your data</li>
+<li>Assigning the result to a variable</li>
+<li>Using the print command to print that variable out</li>
+</ul></li>
+</ul>
+<p>A common question is <em>“but what code should I write?”</em>. Surprise us! If you’re really new to all of this, you could choose something very similar to the simple exercises above, or if you are more experienced, you could stretch yourself with something more fun and complex (last year, someone made a llama plot..).</p>
+<p>The thing we are testing is that you understand how to create a code chunk and some basic code features.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Below that code chunk, create a new heading called “Project Location”</p>
+<p>Remember the screenshot you took in Lab challenge 1? We are going to add it in here.</p>
+<ul>
+<li><p>First, lets find the file. It should be easy as you should have put it in your Lab 1 folder. R doesn’t automatically know which folder to look in, so that file.choose() command can help us find it.</p></li>
+<li><p>IN THE CONSOLE, type file.choose() (including the empty parentheses). A window will pop up. Find your screenshot then press OK. You will see in the console the file address has been written down.</p></li>
+<li><p>Now, go back to your script. Create a new code chunk and inside type the following, but replace FILEADDRESS with the full address that just appeared on your console (INCLUDING THE QUOTES).</p></li>
+<li><p>Now click run and the chunk should load your screenshot inside your R-script. As described in Lab challenge 1, we are checking the version of R, that you have created the project and stored it in the right place.</p></li>
+</ul></li>
+</ol>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="index.html#cb45-1"></a><span class="co"># Load the knitr library</span></span>
+<span id="cb45-2"><a href="index.html#cb45-2"></a><span class="kw">library</span>(knitr)</span>
+<span id="cb45-3"><a href="index.html#cb45-3"></a><span class="co">#Add your screenshot</span></span>
+<span id="cb45-4"><a href="index.html#cb45-4"></a>knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="st">&quot;FILEADDRESS&quot;</span>)</span></code></pre></div>
+<div class="figure"><span id="fig:pic"></span>
+<img src="images/Fig_1_14Pic.png" alt="How your code should look but with your own picture and address" width="688" />
+<p class="caption">
+Figure 1.18: How your code should look but with your own picture and address
+</p>
+</div>
+<p><em>Pictures are a little weird in R, which is why we’re taking our time with this lab. If your picture does not show up in the final nb.html:</em></p>
+<ul>
+<li><p><em>Did you run the code chunk in the R-script so that it showed up just below the code chunk? (not in the plots tab) If not, run the code chunk then save again</em></p></li>
+<li><p><em>You can “knit” the file by clicking knit (near the save button), which will create a html rather than a nb.html. This should include the picture. You are 100% fine to submit the html instead of the nb.html</em></p></li>
+<li><p><em>If it STILL doesn’t work, click in the text oart (outside the code chunk), create a new line and try the command <code>![](FILEADDRESS)</code>, where FILEADDRESS is the output of file.choose() in the console</em></p></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li><strong>CLICK RUN-ALL, then save your file.</strong>
+Go to your Lab 1 folder and click on the nb.html file. This should now be a professional html file of your work. If you have issues, try pressing the knit button and look at the html file (either are fine to submit) Go to Canvas, complete the Canvas course and submit.</li>
+</ol>
+<p>Congratulations on making it through a long document. The first time in a new programming language is always tough, so nice work for making it this far.</p>
+</div>
+<div id="online-courses-and-resources" class="section level2">
+<h2><span class="header-section-number">1.10</span> Online courses and resources</h2>
+<p>If you want to practice the basics,then there are several places you can take free introductory tutorials - all of which I recommend. These include:</p>
+<ul>
+<li><a href="https://bookdown.org/ndphillips/YaRrr/" class="uri">https://bookdown.org/ndphillips/YaRrr/</a> The Pirate’s Guide to R.</li>
+<li>FREE linkedin learning for R (Penn State log-in required): <a href="https://www.linkedin.com/learning/learning-r-2/r-for-data-science?u=76811570" class="uri">https://www.linkedin.com/learning/learning-r-2/r-for-data-science?u=76811570</a></li>
+<li>FREE (basic account) code academy - <a href="https://www.codecademy.com/courses/learn-r/lessons/introduction-to-r/" class="uri">https://www.codecademy.com/courses/learn-r/lessons/introduction-to-r/</a></li>
+<li>Data Camp: First chapter is free - <a href="https://www.datacamp.com/courses/free-introduction-to-r" class="uri">https://www.datacamp.com/courses/free-introduction-to-r</a></li>
+</ul>
+<p><strong>If you’re completely lost - it’s OK! This is pretty normal at this stage. Talk to the instructors and we can point you in the direction of resources to make you feel more comfortable using R.</strong></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="lab-2.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/index.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["GEOG364Labs.pdf", "GEOG364Labs.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Lab 5 | Geog-364: Introduction to R</title>
+  <meta name="description" content="Lab 1 support guide" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Lab 5 | Geog-364: Introduction to R" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="Lab 1 support guide" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Lab 5 | Geog-364: Introduction to R" />
+  
+  <meta name="twitter:description" content="Lab 1 support guide" />
+  
+
+<meta name="author" content="Helen Greatrex" />
+
+
+<meta name="date" content="2020-12-07" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="lab-4.html"/>
+<link rel="next" href="lab-6.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-1.3.1/leaflet.js"></script>
+<link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+<script src="libs/Proj4Leaflet-1.0.1/proj4-compressed.js"></script>
+<script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+<link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+<script src="libs/leaflet-binding-2.0.3/leaflet.js"></script>
+<script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+<script src="libs/leaflet-providers-plugin-2.0.3/leaflet-providers-plugin.js"></script>
+<script src="libs/Leaflet.Sync-0.0.5/L.Map.Sync.js"></script>
+<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
+
+
+<style type="text/css">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">GEOGRAPHY 364 2020</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Lab 1</a><ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#introduction"><i class="fa fa-check"></i><b>1.1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="index.html"><a href="index.html#why-is-this-class-in-r"><i class="fa fa-check"></i><b>1.1.1</b> Why is this class in R?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="index.html"><a href="index.html#what-are-r-and-r-studio"><i class="fa fa-check"></i><b>1.1.2</b> What are R and R-studio?</a></li>
+<li class="chapter" data-level="1.1.3" data-path="index.html"><a href="index.html#what-are-r-markdown-r-shiny"><i class="fa fa-check"></i><b>1.1.3</b> What are R-Markdown &amp; R-Shiny?</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#installing-r-and-r-studio"><i class="fa fa-check"></i><b>1.2</b> Installing R and R-studio</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="index.html"><a href="index.html#i-have-rr-studio-installed-already"><i class="fa fa-check"></i><b>1.2.1</b> I have R/R-studio installed already</a></li>
+<li class="chapter" data-level="1.2.2" data-path="index.html"><a href="index.html#installing-rr-studio-for-the-first-time"><i class="fa fa-check"></i><b>1.2.2</b> Installing R/R-studio for the first time</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#getting-started"><i class="fa fa-check"></i><b>1.3</b> Getting started</a><ul>
+<li class="chapter" data-level="1.3.1" data-path="index.html"><a href="index.html#open-r-studio"><i class="fa fa-check"></i><b>1.3.1</b> Open R-studio</a></li>
+<li class="chapter" data-level="1.3.2" data-path="index.html"><a href="index.html#change-a-few-settings"><i class="fa fa-check"></i><b>1.3.2</b> Change a few settings</a></li>
+<li class="chapter" data-level="1.3.3" data-path="index.html"><a href="index.html#project"><i class="fa fa-check"></i><b>1.3.3</b> Create an R-project</a></li>
+</ul></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#lab-challenge-1"><i class="fa fa-check"></i><b>1.4</b> Lab challenge 1</a></li>
+<li class="chapter" data-level="1.5" data-path="index.html"><a href="index.html#r-coding-basics"><i class="fa fa-check"></i><b>1.5</b> R coding basics</a><ul>
+<li class="chapter" data-level="1.5.1" data-path="index.html"><a href="index.html#basic-arithmatic"><i class="fa fa-check"></i><b>1.5.1</b> Basic arithmatic</a></li>
+<li class="chapter" data-level="1.5.2" data-path="index.html"><a href="index.html#comparing-things"><i class="fa fa-check"></i><b>1.5.2</b> Comparing things</a></li>
+<li class="chapter" data-level="1.5.3" data-path="index.html"><a href="index.html#variables-and-assignment"><i class="fa fa-check"></i><b>1.5.3</b> Variables and assignment</a></li>
+<li class="chapter" data-level="1.5.4" data-path="index.html"><a href="index.html#functions"><i class="fa fa-check"></i><b>1.5.4</b> Functions</a></li>
+<li class="chapter" data-level="1.5.5" data-path="index.html"><a href="index.html#packages"><i class="fa fa-check"></i><b>1.5.5</b> Packages</a></li>
+<li class="chapter" data-level="1.5.6" data-path="index.html"><a href="index.html#coding-help"><i class="fa fa-check"></i><b>1.5.6</b> Coding help</a></li>
+</ul></li>
+<li class="chapter" data-level="1.6" data-path="index.html"><a href="index.html#lab-challenge-2"><i class="fa fa-check"></i><b>1.6</b> Lab Challenge 2</a></li>
+<li class="chapter" data-level="1.7" data-path="index.html"><a href="index.html#create-a-r-markdown-document"><i class="fa fa-check"></i><b>1.7</b> Create a R-Markdown document</a><ul>
+<li class="chapter" data-level="1.7.1" data-path="index.html"><a href="index.html#what-is-markdown"><i class="fa fa-check"></i><b>1.7.1</b> What is markdown?</a></li>
+<li class="chapter" data-level="1.7.2" data-path="index.html"><a href="index.html#creating-a-notebook-document"><i class="fa fa-check"></i><b>1.7.2</b> Creating a notebook document</a></li>
+<li class="chapter" data-level="1.7.3" data-path="index.html"><a href="index.html#Format"><i class="fa fa-check"></i><b>1.7.3</b> Text formatting (in the white area)</a></li>
+</ul></li>
+<li class="chapter" data-level="1.8" data-path="index.html"><a href="index.html#friend"><i class="fa fa-check"></i><b>1.8</b> “Friendly text”</a></li>
+<li class="chapter" data-level="1.9" data-path="index.html"><a href="index.html#lab-challenge-3"><i class="fa fa-check"></i><b>1.9</b> Lab Challenge 3</a></li>
+<li class="chapter" data-level="1.10" data-path="index.html"><a href="index.html#online-courses-and-resources"><i class="fa fa-check"></i><b>1.10</b> Online courses and resources</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="lab-2.html"><a href="lab-2.html"><i class="fa fa-check"></i><b>2</b> Lab 2</a><ul>
+<li class="chapter" data-level="2.1" data-path="lab-2.html"><a href="lab-2.html#Lab2learn"><i class="fa fa-check"></i><b>2.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="2.2" data-path="lab-2.html"><a href="lab-2.html#lab-set-up"><i class="fa fa-check"></i><b>2.2</b> Lab set-up</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="lab-2.html"><a href="lab-2.html#create-a-lab-2-project"><i class="fa fa-check"></i><b>2.2.1</b> Create a Lab 2 Project</a></li>
+<li class="chapter" data-level="2.2.2" data-path="lab-2.html"><a href="lab-2.html#markdown-adding-a-theme"><i class="fa fa-check"></i><b>2.2.2</b> Markdown adding a theme</a></li>
+<li class="chapter" data-level="2.2.3" data-path="lab-2.html"><a href="lab-2.html#installing-common-spatial-packages"><i class="fa fa-check"></i><b>2.2.3</b> Installing common spatial packages</a></li>
+<li class="chapter" data-level="2.2.4" data-path="lab-2.html"><a href="lab-2.html#download-data-for-this-lab"><i class="fa fa-check"></i><b>2.2.4</b> Download data for this lab</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="lab-2.html"><a href="lab-2.html#data.frames-and-summary-statistics"><i class="fa fa-check"></i><b>2.3</b> Data.frames and summary statistics</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="lab-2.html"><a href="lab-2.html#reading-in-your-first-file"><i class="fa fa-check"></i><b>2.3.1</b> Reading in your first file</a></li>
+<li class="chapter" data-level="2.3.2" data-path="lab-2.html"><a href="lab-2.html#summarising-data"><i class="fa fa-check"></i><b>2.3.2</b> Summarising data</a></li>
+<li class="chapter" data-level="2.3.3" data-path="lab-2.html"><a href="lab-2.html#selecting-columns-and-rows"><i class="fa fa-check"></i><b>2.3.3</b> Selecting columns and rows</a></li>
+<li class="chapter" data-level="2.3.4" data-path="lab-2.html"><a href="lab-2.html#basic-plot"><i class="fa fa-check"></i><b>2.3.4</b> Basic plot</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="lab-2.html"><a href="lab-2.html#converting-to-spatial-data"><i class="fa fa-check"></i><b>2.4</b> Converting to spatial data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="lab-2.html"><a href="lab-2.html#making-a-data.frame-spatial"><i class="fa fa-check"></i><b>2.4.1</b> Making a data.frame “spatial”</a></li>
+<li class="chapter" data-level="2.4.2" data-path="lab-2.html"><a href="lab-2.html#reading-in-vector-line-data-rnaturalearth"><i class="fa fa-check"></i><b>2.4.2</b> Reading in vector line data (rnaturalearth)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="lab-2.html"><a href="lab-2.html#assigning-a-map-projection"><i class="fa fa-check"></i><b>2.5</b> Assigning a map projection</a><ul>
+<li class="chapter" data-level="2.5.1" data-path="lab-2.html"><a href="lab-2.html#checking-a-projection-in-the-sp-package"><i class="fa fa-check"></i><b>2.5.1</b> Checking a projection in the <strong>sp</strong> package</a></li>
+<li class="chapter" data-level="2.5.2" data-path="lab-2.html"><a href="lab-2.html#assignchanging-projections-in-the-sp-package"><i class="fa fa-check"></i><b>2.5.2</b> Assign/changing projections in the sp package</a></li>
+<li class="chapter" data-level="2.5.3" data-path="lab-2.html"><a href="lab-2.html#map-projections-in-the-sf-package"><i class="fa fa-check"></i><b>2.5.3</b> Map projections in the <strong>sf</strong> package</a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="lab-2.html"><a href="lab-2.html#interactive-leaflet-plots"><i class="fa fa-check"></i><b>2.6</b> Interactive Leaflet plots</a></li>
+<li class="chapter" data-level="2.7" data-path="lab-2.html"><a href="lab-2.html#describe-the-ghana-data"><i class="fa fa-check"></i><b>2.7</b> Describe the Ghana data</a></li>
+<li class="chapter" data-level="2.8" data-path="lab-2.html"><a href="lab-2.html#show-me-something-new"><i class="fa fa-check"></i><b>2.8</b> Show me something new</a></li>
+<li class="chapter" data-level="2.9" data-path="lab-2.html"><a href="lab-2.html#lab-submission-check"><i class="fa fa-check"></i><b>2.9</b> Lab submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="lab-3.html"><a href="lab-3.html"><i class="fa fa-check"></i><b>3</b> Lab 3</a><ul>
+<li class="chapter" data-level="3.1" data-path="lab-3.html"><a href="lab-3.html#Lab3learn"><i class="fa fa-check"></i><b>3.1</b> Learning objectives</a></li>
+<li class="chapter" data-level="3.2" data-path="lab-3.html"><a href="lab-3.html#lab-3-set-up"><i class="fa fa-check"></i><b>3.2</b> Lab 3 Set-Up</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="lab-3.html"><a href="lab-3.html#create-your-lab-3-project-file"><i class="fa fa-check"></i><b>3.2.1</b> Create your Lab 3 project file</a></li>
+<li class="chapter" data-level="3.2.2" data-path="lab-3.html"><a href="lab-3.html#install-new-packages"><i class="fa fa-check"></i><b>3.2.2</b> Install new packages</a></li>
+<li class="chapter" data-level="3.2.3" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>3.2.3</b> Create your NoteBook file</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="lab-3.html"><a href="lab-3.html#initial-data-exploration"><i class="fa fa-check"></i><b>3.3</b> Initial Data exploration</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="lab-3.html"><a href="lab-3.html#loading-the-data"><i class="fa fa-check"></i><b>3.3.1</b> Loading the data</a></li>
+<li class="chapter" data-level="3.3.2" data-path="lab-3.html"><a href="lab-3.html#reading-more-information"><i class="fa fa-check"></i><b>3.3.2</b> Reading more information</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-1"><i class="fa fa-check"></i><b>3.4</b> Lab-3 Challenge 1</a></li>
+<li class="chapter" data-level="3.5" data-path="lab-3.html"><a href="lab-3.html#mean-centre-and-standard-ellipse"><i class="fa fa-check"></i><b>3.5</b> Mean Centre and Standard Ellipse</a></li>
+<li class="chapter" data-level="3.6" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-2"><i class="fa fa-check"></i><b>3.6</b> Lab-3 Challenge 2</a></li>
+<li class="chapter" data-level="3.7" data-path="lab-3.html"><a href="lab-3.html#global-density-analysis"><i class="fa fa-check"></i><b>3.7</b> Global Density analysis</a></li>
+<li class="chapter" data-level="3.8" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-3"><i class="fa fa-check"></i><b>3.8</b> Lab-3 Challenge 3</a></li>
+<li class="chapter" data-level="3.9" data-path="lab-3.html"><a href="lab-3.html#local-intensity---quadrat-analysis"><i class="fa fa-check"></i><b>3.9</b> Local intensity - quadrat analysis</a></li>
+<li class="chapter" data-level="3.10" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-4"><i class="fa fa-check"></i><b>3.10</b> Lab-3 Challenge 4</a></li>
+<li class="chapter" data-level="3.11" data-path="lab-3.html"><a href="lab-3.html#issues-with-quadrat-analysis"><i class="fa fa-check"></i><b>3.11</b> Issues with quadrat analysis</a></li>
+<li class="chapter" data-level="3.12" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-5"><i class="fa fa-check"></i><b>3.12</b> Lab-3 Challenge 5</a></li>
+<li class="chapter" data-level="3.13" data-path="lab-3.html"><a href="lab-3.html#kernel-density-estimation-kde"><i class="fa fa-check"></i><b>3.13</b> Kernel Density Estimation (KDE)</a></li>
+<li class="chapter" data-level="3.14" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-6"><i class="fa fa-check"></i><b>3.14</b> Lab-3 Challenge 6</a></li>
+<li class="chapter" data-level="3.15" data-path="lab-3.html"><a href="lab-3.html#automatically-calculating-an-optimal-bandwidth"><i class="fa fa-check"></i><b>3.15</b> Automatically calculating an “optimal” bandwidth</a></li>
+<li class="chapter" data-level="3.16" data-path="lab-3.html"><a href="lab-3.html#lab-3-challenge-7"><i class="fa fa-check"></i><b>3.16</b> Lab-3 Challenge 7</a></li>
+<li class="chapter" data-level="3.17" data-path="lab-3.html"><a href="lab-3.html#lab-3-show-me-something-new"><i class="fa fa-check"></i><b>3.17</b> Lab-3 Show me something new</a></li>
+<li class="chapter" data-level="3.18" data-path="lab-3.html"><a href="lab-3.html#lab-3-submission-check"><i class="fa fa-check"></i><b>3.18</b> Lab-3 submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="test-1.html"><a href="test-1.html"><i class="fa fa-check"></i><b>4</b> TEST 1</a><ul>
+<li class="chapter" data-level="4.1" data-path="test-1.html"><a href="test-1.html#set-up-the-data"><i class="fa fa-check"></i><b>4.1</b> Set up the data</a></li>
+<li class="chapter" data-level="4.2" data-path="test-1.html"><a href="test-1.html#lanternfly-analysis"><i class="fa fa-check"></i><b>4.2</b> Lanternfly analysis</a></li>
+<li class="chapter" data-level="4.3" data-path="test-1.html"><a href="test-1.html#beetle-analysis"><i class="fa fa-check"></i><b>4.3</b> Beetle analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="lab-4.html"><a href="lab-4.html"><i class="fa fa-check"></i><b>5</b> Lab 4</a><ul>
+<li class="chapter" data-level="5.1" data-path="lab-4.html"><a href="lab-4.html#lab-4-set-up"><i class="fa fa-check"></i><b>5.1</b> Lab 4 Set-Up</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="lab-4.html"><a href="lab-4.html#create-your-lab-4-project-file"><i class="fa fa-check"></i><b>5.1.1</b> Create your Lab 4 project file</a></li>
+<li class="chapter" data-level="5.1.2" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>5.1.2</b> Create your NoteBook file</a></li>
+<li class="chapter" data-level="5.1.3" data-path="lab-4.html"><a href="lab-4.html#download-and-run-packages"><i class="fa fa-check"></i><b>5.1.3</b> Download and run packages</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="lab-4.html"><a href="lab-4.html#challenge-1-exploratory-analysis"><i class="fa fa-check"></i><b>5.2</b> Challenge 1, Exploratory analysis</a></li>
+<li class="chapter" data-level="5.3" data-path="lab-4.html"><a href="lab-4.html#challenge-2-set-up-the-data"><i class="fa fa-check"></i><b>5.3</b> Challenge 2, set up the data</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="lab-4.html"><a href="lab-4.html#a.-read-in-and-explore-the-point-data"><i class="fa fa-check"></i><b>5.3.1</b> A. Read in and explore the point data</a></li>
+<li class="chapter" data-level="5.3.2" data-path="lab-4.html"><a href="lab-4.html#b.-read-in-the-other-data-and-set-projections"><i class="fa fa-check"></i><b>5.3.2</b> B. Read in the other data and set projections</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="lab-4.html"><a href="lab-4.html#challenge-3-make-data-ppp"><i class="fa fa-check"></i><b>5.4</b> Challenge 3, Make data ppp</a></li>
+<li class="chapter" data-level="5.5" data-path="lab-4.html"><a href="lab-4.html#challenge-4-quadrat-analysis"><i class="fa fa-check"></i><b>5.5</b> Challenge 4, quadrat analysis</a></li>
+<li class="chapter" data-level="5.6" data-path="lab-4.html"><a href="lab-4.html#challenge-5-elevation-links"><i class="fa fa-check"></i><b>5.6</b> Challenge 5, elevation links</a></li>
+<li class="chapter" data-level="5.7" data-path="lab-4.html"><a href="lab-4.html#challenge-6-nearest-neighbour"><i class="fa fa-check"></i><b>5.7</b> Challenge 6 Nearest neighbour</a></li>
+<li class="chapter" data-level="5.8" data-path="lab-4.html"><a href="lab-4.html#challenge-7-l-analysis"><i class="fa fa-check"></i><b>5.8</b> Challenge 7 L Analysis</a></li>
+<li class="chapter" data-level="5.9" data-path="lab-4.html"><a href="lab-4.html#challenge-8-show-me-something-new"><i class="fa fa-check"></i><b>5.9</b> Challenge 8 Show me something new</a></li>
+<li class="chapter" data-level="5.10" data-path="lab-4.html"><a href="lab-4.html#lab-4-submission-check"><i class="fa fa-check"></i><b>5.10</b> Lab-4 submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="lab-5.html"><a href="lab-5.html"><i class="fa fa-check"></i><b>6</b> Lab 5</a><ul>
+<li class="chapter" data-level="6.1" data-path="lab-5.html"><a href="lab-5.html#lab-5-set-up"><i class="fa fa-check"></i><b>6.1</b> Lab 5 Set-Up</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="lab-5.html"><a href="lab-5.html#create-your-lab-5-project-file"><i class="fa fa-check"></i><b>6.1.1</b> Create your Lab 5 project file</a></li>
+<li class="chapter" data-level="6.1.2" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>6.1.2</b> Create your NoteBook file</a></li>
+<li class="chapter" data-level="6.1.3" data-path="lab-5.html"><a href="lab-5.html#style-guide"><i class="fa fa-check"></i><b>6.1.3</b> Style guide</a></li>
+<li class="chapter" data-level="6.1.4" data-path="lab-4.html"><a href="lab-4.html#download-and-run-packages"><i class="fa fa-check"></i><b>6.1.4</b> Download and run packages</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="lab-5.html"><a href="lab-5.html#challenge-1-explore-the-data"><i class="fa fa-check"></i><b>6.2</b> Challenge 1: Explore the data</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="lab-5.html"><a href="lab-5.html#download-load-the-data"><i class="fa fa-check"></i><b>6.2.1</b> Download &amp; load the data</a></li>
+<li class="chapter" data-level="6.2.2" data-path="lab-5.html"><a href="lab-5.html#initial-analysis"><i class="fa fa-check"></i><b>6.2.2</b> Initial analysis</a></li>
+<li class="chapter" data-level="6.2.3" data-path="lab-5.html"><a href="lab-5.html#convert-to-spatial-data"><i class="fa fa-check"></i><b>6.2.3</b> Convert to spatial data</a></li>
+<li class="chapter" data-level="6.2.4" data-path="lab-5.html"><a href="lab-5.html#add-a-projection"><i class="fa fa-check"></i><b>6.2.4</b> Add a projection</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="lab-5.html"><a href="lab-5.html#challenge-2-exploratory-analysis"><i class="fa fa-check"></i><b>6.3</b> Challenge 2: Exploratory analysis</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="lab-5.html"><a href="lab-5.html#make-plots-in-tmap"><i class="fa fa-check"></i><b>6.3.1</b> Make plots in tmap</a></li>
+<li class="chapter" data-level="6.3.2" data-path="lab-5.html"><a href="lab-5.html#exploratory-analysis"><i class="fa fa-check"></i><b>6.3.2</b> Exploratory analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="lab-5.html"><a href="lab-5.html#challenge-3-thiessen-polygons-by-hand"><i class="fa fa-check"></i><b>6.4</b> Challenge 3: Thiessen polygons by hand</a></li>
+<li class="chapter" data-level="6.5" data-path="lab-5.html"><a href="lab-5.html#challenge-4-thiessen-polygons-in-r"><i class="fa fa-check"></i><b>6.5</b> Challenge 4: Thiessen polygons in R</a></li>
+<li class="chapter" data-level="6.6" data-path="lab-5.html"><a href="lab-5.html#challenge-5-inverse-distance-weighting-info"><i class="fa fa-check"></i><b>6.6</b> Challenge 5: Inverse Distance Weighting info</a></li>
+<li class="chapter" data-level="6.7" data-path="lab-5.html"><a href="lab-5.html#challenge-6-inverse-distance-weighting-code"><i class="fa fa-check"></i><b>6.7</b> Challenge 6: Inverse Distance Weighting code</a></li>
+<li class="chapter" data-level="6.8" data-path="lab-5.html"><a href="lab-5.html#challenge-7-checking-accuracy"><i class="fa fa-check"></i><b>6.8</b> Challenge 7: Checking accuracy</a></li>
+<li class="chapter" data-level="6.9" data-path="lab-5.html"><a href="lab-5.html#challenge-8-your-own-idw"><i class="fa fa-check"></i><b>6.9</b> Challenge 8: Your own IDW</a></li>
+<li class="chapter" data-level="6.10" data-path="lab-5.html"><a href="lab-5.html#challenge-9-show-me-something-new"><i class="fa fa-check"></i><b>6.10</b> Challenge 9 Show me something new</a></li>
+<li class="chapter" data-level="6.11" data-path="lab-5.html"><a href="lab-5.html#lab-5-submission-check"><i class="fa fa-check"></i><b>6.11</b> Lab-5 submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="lab-6.html"><a href="lab-6.html"><i class="fa fa-check"></i><b>7</b> Lab 6</a><ul>
+<li class="chapter" data-level="7.1" data-path="lab-6.html"><a href="lab-6.html#lab-6-set-up"><i class="fa fa-check"></i><b>7.1</b> Lab 6 Set-Up</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="lab-6.html"><a href="lab-6.html#create-your-lab-6-project-file"><i class="fa fa-check"></i><b>7.1.1</b> Create your Lab 6 project file</a></li>
+<li class="chapter" data-level="7.1.2" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>7.1.2</b> Create your NoteBook file</a></li>
+<li class="chapter" data-level="7.1.3" data-path="lab-5.html"><a href="lab-5.html#style-guide"><i class="fa fa-check"></i><b>7.1.3</b> Style guide</a></li>
+<li class="chapter" data-level="7.1.4" data-path="lab-4.html"><a href="lab-4.html#download-and-run-packages"><i class="fa fa-check"></i><b>7.1.4</b> Download and run packages</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="lab-6.html"><a href="lab-6.html#tutorial-1-spatial-weights-and-join-counts"><i class="fa fa-check"></i><b>7.2</b> Tutorial 1: Spatial weights and Join Counts</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="lab-6.html"><a href="lab-6.html#making-the-grid"><i class="fa fa-check"></i><b>7.2.1</b> Making the grid</a></li>
+<li class="chapter" data-level="7.2.2" data-path="lab-6.html"><a href="lab-6.html#creating-the-spatial-weights"><i class="fa fa-check"></i><b>7.2.2</b> Creating the spatial weights</a></li>
+<li class="chapter" data-level="7.2.3" data-path="lab-6.html"><a href="lab-6.html#conducting-a-join-counts-analysis"><i class="fa fa-check"></i><b>7.2.3</b> Conducting a join-counts analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="lab-6.html"><a href="lab-6.html#challenge-1-join-counts"><i class="fa fa-check"></i><b>7.3</b> Challenge 1: Join Counts</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="lab-6.html"><a href="lab-6.html#challenge-1a"><i class="fa fa-check"></i><b>7.3.1</b> Challenge 1a</a></li>
+<li class="chapter" data-level="7.3.2" data-path="lab-6.html"><a href="lab-6.html#challenge-1b"><i class="fa fa-check"></i><b>7.3.2</b> Challenge 1b</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="lab-6.html"><a href="lab-6.html#tutorial-2-social-vulnerability-and-morans-i"><i class="fa fa-check"></i><b>7.4</b> Tutorial 2: Social vulnerability and Moran’s I</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="lab-6.html"><a href="lab-6.html#download-the-data"><i class="fa fa-check"></i><b>7.4.1</b> Download the data</a></li>
+<li class="chapter" data-level="7.4.2" data-path="lab-6.html"><a href="lab-6.html#read-the-data-into-r"><i class="fa fa-check"></i><b>7.4.2</b> Read the data into R</a></li>
+<li class="chapter" data-level="7.4.3" data-path="lab-6.html"><a href="lab-6.html#change-the-projection"><i class="fa fa-check"></i><b>7.4.3</b> Change the projection</a></li>
+<li class="chapter" data-level="7.4.4" data-path="lab-6.html"><a href="lab-6.html#explore-the-data"><i class="fa fa-check"></i><b>7.4.4</b> Explore the data</a></li>
+<li class="chapter" data-level="7.4.5" data-path="lab-6.html"><a href="lab-6.html#creating-a-spatial-weights-matrix"><i class="fa fa-check"></i><b>7.4.5</b> Creating a spatial weights matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="lab-6.html"><a href="lab-6.html#challenge-2-your-own-spatial-analysis"><i class="fa fa-check"></i><b>7.5</b> Challenge 2: Your own spatial analysis</a></li>
+<li class="chapter" data-level="7.6" data-path="lab-6.html"><a href="lab-6.html#lab-6-show-me-something-new"><i class="fa fa-check"></i><b>7.6</b> Lab 6 Show me something new</a></li>
+<li class="chapter" data-level="7.7" data-path="lab-6.html"><a href="lab-6.html#lab-6-submission-check"><i class="fa fa-check"></i><b>7.7</b> Lab-6 submission check</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="lab-7.html"><a href="lab-7.html"><i class="fa fa-check"></i><b>8</b> Lab 7</a><ul>
+<li class="chapter" data-level="8.1" data-path="lab-7.html"><a href="lab-7.html#lab-7-set-up"><i class="fa fa-check"></i><b>8.1</b> Lab 7 Set-Up</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="lab-7.html"><a href="lab-7.html#create-your-lab-7-project-file"><i class="fa fa-check"></i><b>8.1.1</b> Create your Lab 7 project file</a></li>
+<li class="chapter" data-level="8.1.2" data-path="lab-3.html"><a href="lab-3.html#create-your-notebook-file"><i class="fa fa-check"></i><b>8.1.2</b> Create your NoteBook file</a></li>
+<li class="chapter" data-level="8.1.3" data-path="lab-5.html"><a href="lab-5.html#style-guide"><i class="fa fa-check"></i><b>8.1.3</b> Style guide</a></li>
+<li class="chapter" data-level="8.1.4" data-path="lab-4.html"><a href="lab-4.html#download-and-run-packages"><i class="fa fa-check"></i><b>8.1.4</b> Download and run packages</a></li>
+<li class="chapter" data-level="8.1.5" data-path="lab-7.html"><a href="lab-7.html#sign-up-for-census-api"><i class="fa fa-check"></i><b>8.1.5</b> Sign up for Census API</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="lab-7.html"><a href="lab-7.html#tutorial-1-data-wrangling"><i class="fa fa-check"></i><b>8.2</b> Tutorial 1: Data Wrangling</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="lab-7.html"><a href="lab-7.html#loading-census-data-from-tidycensus"><i class="fa fa-check"></i><b>8.2.1</b> Loading census data from tidycensus</a></li>
+<li class="chapter" data-level="8.2.2" data-path="lab-7.html"><a href="lab-7.html#re-arranging-the-data"><i class="fa fa-check"></i><b>8.2.2</b> Re-arranging the data</a></li>
+<li class="chapter" data-level="8.2.3" data-path="lab-7.html"><a href="lab-7.html#converting-totals-to-percentages-densities"><i class="fa fa-check"></i><b>8.2.3</b> Converting totals to percentages / densities</a></li>
+<li class="chapter" data-level="8.2.4" data-path="lab-7.html"><a href="lab-7.html#plotting-the-data"><i class="fa fa-check"></i><b>8.2.4</b> Plotting the data</a></li>
+<li class="chapter" data-level="8.2.5" data-path="lab-7.html"><a href="lab-7.html#zooming-in"><i class="fa fa-check"></i><b>8.2.5</b> Zooming in</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="lab-7.html"><a href="lab-7.html#challenge-1"><i class="fa fa-check"></i><b>8.3</b> Challenge 1</a></li>
+<li class="chapter" data-level="8.4" data-path="lab-7.html"><a href="lab-7.html#tutorial-2-regression"><i class="fa fa-check"></i><b>8.4</b> Tutorial 2 Regression</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="lab-7.html"><a href="lab-7.html#basics"><i class="fa fa-check"></i><b>8.4.1</b> Basics</a></li>
+<li class="chapter" data-level="8.4.2" data-path="lab-7.html"><a href="lab-7.html#basic-regression"><i class="fa fa-check"></i><b>8.4.2</b> Basic regression</a></li>
+<li class="chapter" data-level="8.4.3" data-path="lab-7.html"><a href="lab-7.html#spatial-residuals"><i class="fa fa-check"></i><b>8.4.3</b> Spatial residuals</a></li>
+<li class="chapter" data-level="8.4.4" data-path="lab-7.html"><a href="lab-7.html#spatial-lag-model"><i class="fa fa-check"></i><b>8.4.4</b> Spatial lag model</a></li>
+<li class="chapter" data-level="8.4.5" data-path="lab-7.html"><a href="lab-7.html#plotting-the-results"><i class="fa fa-check"></i><b>8.4.5</b> Plotting the results</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="lab-7.html"><a href="lab-7.html#challenge-2"><i class="fa fa-check"></i><b>8.5</b> Challenge 2</a></li>
+<li class="chapter" data-level="8.6" data-path="lab-7.html"><a href="lab-7.html#lab-7-show-me-something-new"><i class="fa fa-check"></i><b>8.6</b> Lab 7 Show me something new</a></li>
+<li class="chapter" data-level="8.7" data-path="lab-7.html"><a href="lab-7.html#lab-7-submission-check"><i class="fa fa-check"></i><b>8.7</b> Lab-7 submission check</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Geog-364: Introduction to R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="lab-5" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> Lab 5</h1>
+<p>Welcome to Lab 5, where we are going to focus on interpolation techniques.</p>
+<p><strong>Objective:</strong> The aim of this lab is to look at different ways of interpolating data, specifically Thiessen polygons and inverse distance weighting.</p>
+<p><strong>Data-sets:</strong> You will be conducting your analysis on some environmental data in California.</p>
+<div id="lab-5-set-up" class="section level2">
+<h2><span class="header-section-number">6.1</span> Lab 5 Set-Up</h2>
+<div id="create-your-lab-5-project-file" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> Create your Lab 5 project file</h3>
+<ul>
+<li>Open a new version of R-studio.<br />
+</li>
+<li>Click the file menu, then new project in a new directory.<br />
+</li>
+<li>Select your 364 directory, then name the project Lab 5.</li>
+</ul>
+<p>If you are stuck on this process, see the start of previous labs. You can check this has worked by looking on the file explorer on your computer, then selecting your GEOG364 folder and checking that a Lab 5 folder has appeared with your Lab4.Proj file inside it.</p>
+</div>
+<div id="create-your-notebook-file" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Create your NoteBook file</h3>
+<p>Here you have a choice:</p>
+<p>Either.. you can create a standard lab script as before:</p>
+<ul>
+<li>Go to File/New File and create a new R-NOTEBOOK file.</li>
+<li>Delete the friendly text (everything from line 6 onward)</li>
+<li>Save your file as <code>GEOG364_Lab5_PSU.ID.Rmd</code> e.g. <code>GEOG364_Lab4_hlg5155.Rmd</code></li>
+<li>Follow Section 2.2.2 to modify your YAML code</li>
+<li><em>Please make sure that your lab script has a floating table of contents</em> (section 2.2.2, adding the <code>toc_float: TRUE</code> part)</li>
+</ul>
+<p>Or..OPTIONAL:</p>
+<p>If you want to explore some new formats, you can try one of the markdown templates stored in R.There are instructions on how to load them on the website here: <a href="https://github.com/juba/rmdformats/blob/master/README.md" class="uri">https://github.com/juba/rmdformats/blob/master/README.md</a>).</p>
+<p>Again, make sure to save your file as <code>GEOG364_Lab5_PSU.ID.Rmd</code>. Please also add in a floating table of contents to your YAML code.</p>
+</div>
+<div id="style-guide" class="section level3">
+<h3><span class="header-section-number">6.1.3</span> Style guide</h3>
+<p>A large component of the marks for your labs scripts focuses them being easily readable and easy to follow. Now you have had experience with R, here are some of the things we expect to get full marks:</p>
+<ol style="list-style-type: decimal">
+<li>You include a floating table of contents, title and author in the YAML Code</li>
+<li>You include a “level 1” heading in your text for every lab challenge e.g. <code># Lab challenge 1</code></li>
+<li>It’s easy to see where your answers are - so you have full sentences, not just one word answers.</li>
+<li>You have spell-checked your work! The spell check button is between the save button and the knit/preview button.</li>
+<li>You include blank lines before and after each code chunk, or new paragraph, or bullet point set or heading (put many blank lines in markdown files and R can automatically format them correctly).</li>
+<li>Any written answers are thoughtful and well considered.</li>
+</ol>
+<p>As you write your lab, <em>regularly</em> click the Preview or Knit Button and make sure everything looks correct and properly formatted. IF THERE ARE PROBLEMS, TALK TO AN INSTRUCTOR.</p>
+</div>
+<div id="download-and-run-packages" class="section level3">
+<h3><span class="header-section-number">6.1.4</span> Download and run packages</h3>
+<p>Follow the instructions in Section 3.2.2. to download and install the following packages</p>
+<ul>
+<li><code>tmap</code></li>
+<li><code>dismo</code></li>
+</ul>
+<p>Now add a new code chunk in your script. Inside add the following code and run it.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="lab-5.html#cb121-1"></a><span class="kw">library</span>(tmap)      <span class="co"># Used for plotting</span></span>
+<span id="cb121-2"><a href="lab-5.html#cb121-2"></a><span class="kw">library</span>(sp)        <span class="co"># Used for the spsample function</span></span>
+<span id="cb121-3"><a href="lab-5.html#cb121-3"></a><span class="kw">library</span>(maptools)  <span class="co"># Used for conversion from SPDF to ppp</span></span>
+<span id="cb121-4"><a href="lab-5.html#cb121-4"></a><span class="kw">library</span>(raster)    <span class="co"># Used to clip out thiessen polygons</span></span>
+<span id="cb121-5"><a href="lab-5.html#cb121-5"></a><span class="kw">library</span>(gstat)     <span class="co"># Use gstat&#39;s idw routine</span></span>
+<span id="cb121-6"><a href="lab-5.html#cb121-6"></a><span class="kw">library</span>(dismo)     <span class="co"># Method for thiessen polygons</span></span>
+<span id="cb121-7"><a href="lab-5.html#cb121-7"></a><span class="kw">library</span>(knitr)     <span class="co"># Used for the insert image function</span></span></code></pre></div>
+<p>This needs to be at the top of your script because the library commands need to be run every time you open R. Now click the Preview or Knit Button and make sure everything looks correct.</p>
+<p><em>Don’t continue until you can make and view your html or nb.html file. If it doesn’t work, ask for help before moving on</em></p>
+</div>
+</div>
+<div id="challenge-1-explore-the-data" class="section level2">
+<h2><span class="header-section-number">6.2</span> Challenge 1: Explore the data</h2>
+<p>(remember to create a new heading in your text for each challenge)</p>
+<div id="download-load-the-data" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> Download &amp; load the data</h3>
+<p>Click on this link to download the data from the internet. Save it in your lab 5 folder.</p>
+<ul>
+<li><a href="https://raw.githubusercontent.com/hgreatrex/GEOG364_Labs/master/Lab_5/Lab5California.rdata" class="uri">https://raw.githubusercontent.com/hgreatrex/GEOG364_Labs/master/Lab_5/Lab5California.rdata</a></li>
+</ul>
+<p>Now in a new code chunk, open the data in R using the <code>load</code> command e.g. <code>load("Lab5California.rdata")</code></p>
+<p>This command will load two California data-sets into R:</p>
+<ol style="list-style-type: decimal">
+<li><p>California - The boundaries of the State of California</p></li>
+<li><p>Precip.table - The average rainfall recorded at weather stations in California during each month of the year.</p>
+<ul>
+<li>Each row represents one weather-station/gauge. For example, row 1 is the climatology for a weather station situated at Lat:36.47 and Long:-116.87.</li>
+<li>Columns
+<ul>
+<li>The Long/Lat columns represent the longitude and latitude of each gauge</li>
+<li>The Alt column is the altitude/elevation in m.<br />
+</li>
+<li>The Jan-Dec columns are the monthly average rainfall in mm</li>
+<li>and the Annual column is the total rainfall over the year in mm.</li>
+</ul></li>
+</ul></li>
+</ol>
+</div>
+<div id="initial-analysis" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Initial analysis</h3>
+<ol style="list-style-type: decimal">
+<li><p>In a new code chunk, look at the summary of the Precip.table data (see previous labs for ideas on how to do this).</p></li>
+<li><p>Below your code chunk, in a full sentence, write the value of the maximum rainfall that fell in April across California, including units!</p></li>
+</ol>
+<p>We can also look at some summary plots of the data:</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>In a new code chunk apply the <code>hist</code> command to create a histogram of January rainfall (e.g. apply <code>hist</code> to the Jan column of Precip.table). If you can’t remember how to select a column, see Lab 2, section 2.3.3.</p></li>
+<li><p>Copy the code below into R to make a series of boxplots.</p></li>
+</ol>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="lab-5.html#cb122-1"></a><span class="kw">boxplot</span>(Precip.table[,<span class="dv">4</span><span class="op">:</span><span class="dv">15</span>],</span>
+<span id="cb122-2"><a href="lab-5.html#cb122-2"></a>        <span class="dt">pch=</span><span class="dv">4</span>,<span class="dt">cex=</span>.<span class="dv">6</span>,</span>
+<span id="cb122-3"><a href="lab-5.html#cb122-3"></a>        <span class="dt">cex.axis=</span>.<span class="dv">8</span>,<span class="dt">las=</span><span class="dv">2</span>,</span>
+<span id="cb122-4"><a href="lab-5.html#cb122-4"></a>        <span class="dt">tcl=</span><span class="op">-</span>.<span class="dv">25</span>)</span></code></pre></div>
+<p>Underneath the code, explain:</p>
+<ul>
+<li><p>What <code>pch</code>, <code>cex</code> and <code>las</code> are doing. Typing ?par into the console might help</p></li>
+<li><p>What the grey box represents for each month (This might help: <a href="https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-data-statistics/cc-6th-box-whisker-plots/v/reading-box-and-whisker-plots" class="uri">https://www.khanacademy.org/math/cc-sixth-grade-math/cc-6th-data-statistics/cc-6th-box-whisker-plots/v/reading-box-and-whisker-plots</a>)</p></li>
+</ul>
+<p><em>Note, for your show me something new, you could consider making a fancy version of these boxplots, with many ideas here: <a href="https://www.r-graph-gallery.com/boxplot.html" class="uri">https://www.r-graph-gallery.com/boxplot.html</a></em></p>
+</div>
+<div id="convert-to-spatial-data" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Convert to spatial data</h3>
+<p>Remember to add a heading.. this is your last reminder! You now need to convert your table of data to a spatial “sp” format. <em>(If you wish to learn more about sp vs sf there is a data camp course)</em></p>
+<p>Copy the code chunk below into your code. Now replace the X-COORD and Y-COORD with the names of the columns that contain the x and y data in Precip.table. This is case sensitive and should be contained in quotes.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="lab-5.html#cb123-1"></a><span class="co">#Convert to sp </span></span>
+<span id="cb123-2"><a href="lab-5.html#cb123-2"></a>Precip.spdf &lt;-<span class="st"> </span>Precip.table</span>
+<span id="cb123-3"><a href="lab-5.html#cb123-3"></a><span class="kw">coordinates</span>(Precip.spdf) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;X-COORD&quot;</span>,<span class="st">&quot;Y-COORD&quot;</span>)</span></code></pre></div>
+<p>Check it works by plotting the data e.g.</p>
+<div class="figure"><span id="fig:socali"></span>
+<img src="images/Fig_5_01Cali.png" alt="What your plot should look like" width="634" />
+<p class="caption">
+Figure 6.1: What your plot should look like
+</p>
+</div>
+<p>If your plot does not look like this, DO NOT CONTINUE UNTIL IT IS FIXED.</p>
+</div>
+<div id="add-a-projection" class="section level3">
+<h3><span class="header-section-number">6.2.4</span> Add a projection</h3>
+<p>Now <strong>check</strong> the projection of both <code>Precip.spdf</code> and the <code>California</code> boundary data. (see Lab 2, section 2.5.1 if you have forgotten).</p>
+<p>You should see that Precip.spdf currently doesn’t have a map projection.</p>
+<p><strong>As the x and y columns are longitude and latitude data, use the <code>proj4string</code> command to assign the projection of Precip.spdf to be “+proj=longlat +datum=WGS84 +no_defs +ellps=GRS80”. LOOK AT LAB 2 (section 2.5.5) FOR AN EXAMPLE OF HOW TO DO THIS</strong></p>
+<p>For both the California boundary data and the precip data, we now need to set the projection to be something where distance is a conserved property. You could choose the UTM projection over California, but let’s see a new one: the Albers Equal-Area Conic projection (<a href="https://en.wikipedia.org/wiki/Albers_projection" class="uri">https://en.wikipedia.org/wiki/Albers_projection</a>).</p>
+<p>The code for this is</p>
+<ul>
+<li>“+proj=aea +lat_1=34 +lat_2=40.5 +lat_0=0 +lon_0=-120 +x_0=0 +y_0=-4000000 +datum=NAD83 +units=km +ellps=GRS80”</li>
+</ul>
+<p><strong>In a new code chunk, use the spTransform command twice to change the projection of each of Precip.spdf and the California data to the Albers projection. Again, Lab 2 section 2.5.2 might be useful here.</strong></p>
+<p>If you get warnings like: <em>“CRS object has comment, which is lost in output”</em> or <em>“NULL source CRS comment, falling back to PROJ string”</em>, or anything else that specifically doesn’t say error,ignore them - they’re a consequence of the recent R upgrade.</p>
+<p>Now if you now run the plot command and also add California, they should plot on top of each other. DON’T CONTINUE UNTIL YOU CAN REPRODUCE THIS.</p>
+<div class="figure"><span id="fig:socali2"></span>
+<img src="images/FIg_5_02_caliborder.png" alt="What your plot should look like" width="551" />
+<p class="caption">
+Figure 6.2: What your plot should look like
+</p>
+</div>
+</div>
+</div>
+<div id="challenge-2-exploratory-analysis" class="section level2">
+<h2><span class="header-section-number">6.3</span> Challenge 2: Exploratory analysis</h2>
+<div id="make-plots-in-tmap" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> Make plots in tmap</h3>
+<p>In this section, you will learn a new package called <code>tmap</code> to make some more interesting plots. There is a general tutorial here: <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html" class="uri">https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html</a></p>
+<p>I have provided the code for our example.</p>
+<ul>
+<li>Copy this into your script (you may have to re-write the "s).</li>
+<li>Use the tutorial to help you write better comments to explain what is happening</li>
+</ul>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="lab-5.html#cb124-1"></a><span class="co"># WRITE COMMENT HERE. WHAT HAPPENS IF THIS IS SET TO &quot;plot&quot;?</span></span>
+<span id="cb124-2"><a href="lab-5.html#cb124-2"></a>current.mode &lt;-<span class="st"> </span><span class="kw">tmap_mode</span>(<span class="st">&quot;view&quot;</span>)</span>
+<span id="cb124-3"><a href="lab-5.html#cb124-3"></a></span>
+<span id="cb124-4"><a href="lab-5.html#cb124-4"></a><span class="co"># Choose the name of the column you want to plot</span></span>
+<span id="cb124-5"><a href="lab-5.html#cb124-5"></a>myColumn =<span class="st"> &quot;Aug&quot;</span></span>
+<span id="cb124-6"><a href="lab-5.html#cb124-6"></a></span>
+<span id="cb124-7"><a href="lab-5.html#cb124-7"></a><span class="co"># WRITE COMMENT HERE.  EXPLAIN WHAT THE CODE DOING</span></span>
+<span id="cb124-8"><a href="lab-5.html#cb124-8"></a><span class="kw">tm_basemap</span>(<span class="st">&quot;Stamen.Terrain&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb124-9"><a href="lab-5.html#cb124-9"></a><span class="st">  </span><span class="kw">tm_shape</span>(Precip.spdf) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb124-10"><a href="lab-5.html#cb124-10"></a><span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">col=</span>myColumn, </span>
+<span id="cb124-11"><a href="lab-5.html#cb124-11"></a>          <span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>,</span>
+<span id="cb124-12"><a href="lab-5.html#cb124-12"></a>          <span class="dt">title=</span><span class="kw">paste</span>(<span class="st">&quot;Total rain (mm):&quot;</span>,myColumn), </span>
+<span id="cb124-13"><a href="lab-5.html#cb124-13"></a>          <span class="dt">size=</span><span class="fl">0.1</span>,<span class="dt">style=</span><span class="st">&quot;cont&quot;</span>) </span>
+<span id="cb124-14"><a href="lab-5.html#cb124-14"></a></span>
+<span id="cb124-15"><a href="lab-5.html#cb124-15"></a><span class="co"># WRITE A COMMENT HERE TO EXPLAIN WHAT THE PASTE COMMAND IS DOING</span></span>
+<span id="cb124-16"><a href="lab-5.html#cb124-16"></a></span>
+<span id="cb124-17"><a href="lab-5.html#cb124-17"></a><span class="co"># This is based on leaflet, so you can change the interactive basemap with any from here: </span></span>
+<span id="cb124-18"><a href="lab-5.html#cb124-18"></a><span class="co"># http://leaflet-extras.github.io/leaflet-providers/preview/index.html </span></span>
+<span id="cb124-19"><a href="lab-5.html#cb124-19"></a><span class="co"># You can also run this command in the console to see all the colour palettes available to you:   </span></span>
+<span id="cb124-20"><a href="lab-5.html#cb124-20"></a><span class="co"># tmaptools::palette_explorer()</span></span></code></pre></div>
+</div>
+<div id="exploratory-analysis" class="section level3">
+<h3><span class="header-section-number">6.3.2</span> Exploratory analysis</h3>
+<ul>
+<li><p>Edit the code chunk above and run to look at the data for each month. You can just adjust the chunk above - you do not need to copy/paste or create new code chunks.</p></li>
+<li><p>From this exploratory analysis, briefly describe California’s rainfall patterns. For example,</p></li>
+<li><p>how does rainfall vary spatially in different months?</p></li>
+<li><p>What link is there to elevation?</p></li>
+<li><p>What factors you think might be causing the differences in rainfall amount across the State?</p></li>
+</ul>
+<p><em>Useful resource: you can also look in more detail at the climate for specific places here. <a href="https://weatherspark.com/" class="uri">https://weatherspark.com/</a></em></p>
+</div>
+</div>
+<div id="challenge-3-thiessen-polygons-by-hand" class="section level2">
+<h2><span class="header-section-number">6.4</span> Challenge 3: Thiessen polygons by hand</h2>
+<p>Now we will move onto interpolation. At the moment we know that rainfall is field data - it has a value at every location. But we only have the values at our weather stations. It would be good to interpolate to new areas to create a map.</p>
+<p>The first technique we will use is Thiessen, or proximity polygons. These are also called Voronoi diagrams.</p>
+<ol style="list-style-type: decimal">
+<li><p>In your text, briefly describe what Thiessen polygons are. Lectures and these resources might help: <a href="http://www.gitta.info/Accessibilit/en/html/UncProxAnaly_learningObject4.html" class="uri">http://www.gitta.info/Accessibilit/en/html/UncProxAnaly_learningObject4.html</a></p></li>
+<li><p>On the separate sheet provided in the lab, calculate and draw the Thiessen polygons for the four points. Take a photo/scan of the sheet and load it into your lab as a screenshot. There are two ways to do this:</p>
+<ul>
+<li>Following these instructions if you prefer a vector approach: <a href="http://www.hydrology.bee.cornell.edu/BEE3710Handouts/ThiessenPoly.pdf" class="uri">http://www.hydrology.bee.cornell.edu/BEE3710Handouts/ThiessenPoly.pdf</a></li>
+<li>Or a second approach is the raster version: for each grid-cell, work out which point it is closest to and build up polygons that way.</li>
+</ul></li>
+</ol>
+<p>We are grading you here on whether you explain what Theissen polygons are and if you attempt and upload your screenshot. Drawing these can be surprisingly hard, so we are <em>not</em> grading you on getting the polygons correct/perfect. “Cheating” is also encouraged! By this I mean: if you if you can work out how to reproduce these points in R, then you can automatically calculate the Thiessen polygons and see what the answer is..</p>
+</div>
+<div id="challenge-4-thiessen-polygons-in-r" class="section level2">
+<h2><span class="header-section-number">6.5</span> Challenge 4: Thiessen polygons in R</h2>
+<p>The command to calculate Thiessen polygons in R comes from the dismo package and is called the voronoi function. It assumes that the data is a series of points in sp format.</p>
+<p>Apply the <code>voronoi</code> command to Precip.spdf and save it as a variable called Precip.Thiessen.</p>
+<p>If you need a hand, look at the helpfile for the voronoi function (and scroll to the end for an example) or see here <a href="https://rspatial.org/raster/rosu/Chapter11.html" class="uri">https://rspatial.org/raster/rosu/Chapter11.html</a></p>
+<p>Copy/add the code below to your script. This plots the output of your voronoi analysis for individual columns of your data. AKA you can change “Annual” to be any column named in your Precip.Table. (try names(Precip.Table) in the console if you have forgotten them)</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="lab-5.html#cb125-1"></a><span class="kw">spplot</span>(Precip.Thiessen,<span class="st">&#39;Annual&#39;</span>,<span class="dt">col.regions=</span><span class="kw">rev</span>(<span class="kw">get_col_regions</span>()))</span>
+<span id="cb125-2"><a href="lab-5.html#cb125-2"></a></span>
+<span id="cb125-3"><a href="lab-5.html#cb125-3"></a><span class="co">#The spplot command is yet another way of plotting spatial data in R (there is a tutorial here: #http://www.nickeubank.com/wp-content/uploads/2015/10/RGIS3_MakingMaps_part1_mappingVectorData.html#spplot)</span></span></code></pre></div>
+<p>Below the plot, explain what it is showing you. What do the colours represent and why are the polygons drawn that way. Why do the polygons look so strange towards the edge of the plot?</p>
+<p>It would be good to crop out California. We can use the raster package and the following code to do this. Run this code in your script.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="lab-5.html#cb126-1"></a><span class="co"># Add the state boundaries</span></span>
+<span id="cb126-2"><a href="lab-5.html#cb126-2"></a>CaliforniaNew           &lt;-<span class="st"> </span><span class="kw">aggregate</span>(California)</span>
+<span id="cb126-3"><a href="lab-5.html#cb126-3"></a>Precip.Thiessen.clipped &lt;-<span class="st"> </span><span class="kw">intersect</span>(Precip.Thiessen, CaliforniaNew)</span>
+<span id="cb126-4"><a href="lab-5.html#cb126-4"></a><span class="kw">spplot</span>(Precip.Thiessen.clipped, <span class="st">&#39;Annual&#39;</span>, <span class="dt">col.regions=</span><span class="kw">rev</span>(<span class="kw">get_col_regions</span>()))</span></code></pre></div>
+<p>Below the code chunk, explain what are the limitations of Thiessen/proximity polygons, specifically for field data such as rainfall or elevation. What are the advantages and disadvantages of the final map?</p>
+</div>
+<div id="challenge-5-inverse-distance-weighting-info" class="section level2">
+<h2><span class="header-section-number">6.6</span> Challenge 5: Inverse Distance Weighting info</h2>
+<p><em>These resources should help you answer the questions below if needed</em></p>
+<ul>
+<li><p><em>The latest lecture notes</em></p></li>
+<li><p><em>O’Sullivan/Unwin textbook page 257-261 (the pdf is on the main-course Canvas under files/books)</em></p></li>
+<li><p><em><a href="https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/how-inverse-distance-weighted-interpolation-works.htm" class="uri">https://pro.arcgis.com/en/pro-app/help/analysis/geostatistical-analyst/how-inverse-distance-weighted-interpolation-works.htm</a></em></p></li>
+<li><p><em><a href="https://mgimond.github.io/Spatial/spatial-interpolation.html" class="uri">https://mgimond.github.io/Spatial/spatial-interpolation.html</a></em></p></li>
+</ul>
+<ol style="list-style-type: decimal">
+<li><p>In this section, describe the process of inverse distance weighting (IDW). You do not need to use equations.</p></li>
+<li><p><strong>“IDW is an exact interpolator”</strong> Explain what this statement means. (O’Sullivan/Unwin might be helpful here)</p></li>
+</ol>
+</div>
+<div id="challenge-6-inverse-distance-weighting-code" class="section level2">
+<h2><span class="header-section-number">6.7</span> Challenge 6: Inverse Distance Weighting code</h2>
+<p>This code will run the inverse distance weighting code for the Annual rainfall California data, with a power of two. E.g. the weighting is proportional to</p>
+<p><span class="math display">\[\frac{1}{distance^{2}}\]</span>
+Copy the code below into R and make sure you can run it. It should give a plot of California. If there are errors about CRS, ignore them.</p>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="lab-5.html#cb127-1"></a><span class="co"># Create an empty grid over California</span></span>
+<span id="cb127-2"><a href="lab-5.html#cb127-2"></a>grid            &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">spsample</span>(Precip.spdf, <span class="st">&quot;regular&quot;</span>, <span class="dt">n=</span><span class="dv">50000</span>))</span>
+<span id="cb127-3"><a href="lab-5.html#cb127-3"></a><span class="kw">names</span>(grid)     &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>)</span>
+<span id="cb127-4"><a href="lab-5.html#cb127-4"></a><span class="kw">coordinates</span>(grid)&lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;X&quot;</span>, <span class="st">&quot;Y&quot;</span>)</span>
+<span id="cb127-5"><a href="lab-5.html#cb127-5"></a><span class="kw">gridded</span>(grid)   &lt;-<span class="st"> </span><span class="ot">TRUE</span>  <span class="co"># Create SpatialPixel object</span></span>
+<span id="cb127-6"><a href="lab-5.html#cb127-6"></a><span class="kw">fullgrid</span>(grid)  &lt;-<span class="st"> </span><span class="ot">TRUE</span>  <span class="co"># Create SpatialGrid object</span></span>
+<span id="cb127-7"><a href="lab-5.html#cb127-7"></a></span>
+<span id="cb127-8"><a href="lab-5.html#cb127-8"></a><span class="co"># Add the California projection information to the empty grid</span></span>
+<span id="cb127-9"><a href="lab-5.html#cb127-9"></a><span class="kw">proj4string</span>(grid) &lt;-<span class="st"> </span><span class="kw">proj4string</span>(California)</span>
+<span id="cb127-10"><a href="lab-5.html#cb127-10"></a></span>
+<span id="cb127-11"><a href="lab-5.html#cb127-11"></a><span class="co"># What inverse distance weighting power would you like?</span></span>
+<span id="cb127-12"><a href="lab-5.html#cb127-12"></a>Power &lt;-<span class="st"> </span><span class="dv">2</span></span>
+<span id="cb127-13"><a href="lab-5.html#cb127-13"></a></span>
+<span id="cb127-14"><a href="lab-5.html#cb127-14"></a><span class="co"># The IDW command calculates the inverse distance weighting</span></span>
+<span id="cb127-15"><a href="lab-5.html#cb127-15"></a>Precip.idw &lt;-<span class="st"> </span>gstat<span class="op">::</span><span class="kw">idw</span>(Annual <span class="op">~</span><span class="st"> </span><span class="dv">1</span>,  <span class="co"># Choose the annual column, no trend</span></span>
+<span id="cb127-16"><a href="lab-5.html#cb127-16"></a>                         Precip.spdf, <span class="co"># For the precip sp data</span></span>
+<span id="cb127-17"><a href="lab-5.html#cb127-17"></a>                         <span class="dt">newdata=</span>grid,<span class="co"># interpolate onto the new grid </span></span>
+<span id="cb127-18"><a href="lab-5.html#cb127-18"></a>                         <span class="dt">idp=</span>Power)       <span class="co"># Set the power to be the number stored in the Power variable</span></span>
+<span id="cb127-19"><a href="lab-5.html#cb127-19"></a></span>
+<span id="cb127-20"><a href="lab-5.html#cb127-20"></a><span class="co"># Now convert to a raster object &amp; clip to California</span></span>
+<span id="cb127-21"><a href="lab-5.html#cb127-21"></a>Precip.idw.raster &lt;-<span class="st"> </span><span class="kw">raster</span>(Precip.idw)</span>
+<span id="cb127-22"><a href="lab-5.html#cb127-22"></a>Precip.idw.mask   &lt;-<span class="st"> </span><span class="kw">mask</span>(Precip.idw.raster, California)</span>
+<span id="cb127-23"><a href="lab-5.html#cb127-23"></a></span>
+<span id="cb127-24"><a href="lab-5.html#cb127-24"></a><span class="co"># And plot to a static plot</span></span>
+<span id="cb127-25"><a href="lab-5.html#cb127-25"></a>current.mode &lt;-<span class="st"> </span><span class="kw">tmap_mode</span>(<span class="st">&quot;plot&quot;</span>)</span>
+<span id="cb127-26"><a href="lab-5.html#cb127-26"></a></span>
+<span id="cb127-27"><a href="lab-5.html#cb127-27"></a><span class="co"># A more complex tmap</span></span>
+<span id="cb127-28"><a href="lab-5.html#cb127-28"></a><span class="kw">tm_shape</span>(Precip.idw.mask) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb127-29"><a href="lab-5.html#cb127-29"></a><span class="st">  </span><span class="kw">tm_raster</span>(<span class="dt">n=</span><span class="dv">10</span>,<span class="dt">palette =</span> <span class="st">&quot;RdBu&quot;</span>,</span>
+<span id="cb127-30"><a href="lab-5.html#cb127-30"></a>            <span class="dt">style=</span><span class="st">&quot;cont&quot;</span>,</span>
+<span id="cb127-31"><a href="lab-5.html#cb127-31"></a>            <span class="dt">breaks=</span><span class="kw">seq</span>(<span class="dt">from=</span><span class="dv">0</span>,<span class="dt">to=</span><span class="dv">2400</span>,<span class="dt">length.out=</span><span class="dv">20</span>),</span>
+<span id="cb127-32"><a href="lab-5.html#cb127-32"></a>            <span class="dt">title=</span><span class="kw">paste</span>(<span class="st">&quot;Rain, Power:&quot;</span>,Power)) <span class="op">+</span></span>
+<span id="cb127-33"><a href="lab-5.html#cb127-33"></a><span class="st">  </span><span class="kw">tm_shape</span>(Precip.spdf) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb127-34"><a href="lab-5.html#cb127-34"></a><span class="st">  </span><span class="kw">tm_dots</span>(<span class="dt">size=</span><span class="fl">0.02</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb127-35"><a href="lab-5.html#cb127-35"></a><span class="st">  </span><span class="kw">tm_legend</span>(<span class="dt">legend.outside=</span><span class="ot">TRUE</span>)</span></code></pre></div>
+<p>Below the code chunk, answer the following questions. Please include the questions in your text to make it easy for us to grade your answers.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>In the output above, for a power of 2, there appear to be “circles” or “bulls-eyes” around each many of the rain-gauges. Why is this?</p></li>
+<li><p>What happens when you make the power a high number, say 12, and rerun the code chunk? Why does the map look the way it does?</p></li>
+<li><p>What happens when you make the power to a low number below 1, say 0.5, and rerun the code chunk? Why does the map look the way it does?</p></li>
+</ol>
+</div>
+<div id="challenge-7-checking-accuracy" class="section level2">
+<h2><span class="header-section-number">6.8</span> Challenge 7: Checking accuracy</h2>
+<p>As described in <a href="https://mgimond.github.io/Spatial/spatial-interpolation.html" class="uri">https://mgimond.github.io/Spatial/spatial-interpolation.html</a>
+Finding the “best” power can be subjective. .</p>
+<p>One option is to split the points into two sets: we do the interpolation using half the points, then check to see how good it was using the other half of the data. The downside of this is that we are only using half the data, so we might leave out important information. This is a loss of statistical power.</p>
+<p>A better approach to fine-tune the choice of the power parameter, we can perform a leave-one-out validation routine to measure the error in the interpolated values. Here, we remove one data point from the dataset and estimate its value using all other points and the IDW tecnique. Then we repeat this process for every point. The interpolated values are then compared with the actual values from the omitted point. This method is sometimes referred to as jackknifing or cross-validation.</p>
+<p>We can then create a scatterplot of the predicted vs. expected precipitation values from our dataset. The solid diagonal line represents the one-to-one slope (i.e. if the predicted values matched the true values exactly, then the points would fall on this line). The red dashed line is a linear fit to the points which is here to help guide our eyes along the pattern generated by these points. We can then calculate the RMSE, the Root Mean Squared Error, to see how far the residuals are from the line. The smaller the RMSE, the better the fit.</p>
+<p>The code below shows the plot and RMSE for the California data and a power of 2.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="lab-5.html#cb128-1"></a><span class="co"># Change the power here and don&#39;t touch the rest</span></span>
+<span id="cb128-2"><a href="lab-5.html#cb128-2"></a>power=<span class="dv">2</span></span>
+<span id="cb128-3"><a href="lab-5.html#cb128-3"></a></span>
+<span id="cb128-4"><a href="lab-5.html#cb128-4"></a><span class="co"># Leave-one-out validation routine</span></span>
+<span id="cb128-5"><a href="lab-5.html#cb128-5"></a>IDW.out &lt;-<span class="st"> </span><span class="kw">vector</span>(<span class="dt">length =</span> <span class="kw">length</span>(Precip.spdf))</span>
+<span id="cb128-6"><a href="lab-5.html#cb128-6"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(Precip.spdf)) {</span>
+<span id="cb128-7"><a href="lab-5.html#cb128-7"></a>  IDW.out[i] &lt;-<span class="st"> </span><span class="kw">suppressWarnings</span>(</span>
+<span id="cb128-8"><a href="lab-5.html#cb128-8"></a>                        gstat<span class="op">::</span><span class="kw">idw</span>(Annual <span class="op">~</span><span class="st"> </span><span class="dv">1</span>, </span>
+<span id="cb128-9"><a href="lab-5.html#cb128-9"></a>                                   Precip.spdf[<span class="op">-</span>i,], </span>
+<span id="cb128-10"><a href="lab-5.html#cb128-10"></a>                                   Precip.spdf[i,],</span>
+<span id="cb128-11"><a href="lab-5.html#cb128-11"></a>                                   <span class="dt">idp=</span>power,<span class="dt">debug.level=</span><span class="dv">0</span>)<span class="op">$</span>var1.pred)</span>
+<span id="cb128-12"><a href="lab-5.html#cb128-12"></a>}</span>
+<span id="cb128-13"><a href="lab-5.html#cb128-13"></a></span>
+<span id="cb128-14"><a href="lab-5.html#cb128-14"></a><span class="co"># Compute RMSE</span></span>
+<span id="cb128-15"><a href="lab-5.html#cb128-15"></a>RMSE &lt;-<span class="st"> </span><span class="kw">sqrt</span>( <span class="kw">sum</span>((IDW.out <span class="op">-</span><span class="st"> </span>Precip.spdf<span class="op">$</span>Annual)<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="kw">length</span>(Precip.spdf))</span>
+<span id="cb128-16"><a href="lab-5.html#cb128-16"></a></span>
+<span id="cb128-17"><a href="lab-5.html#cb128-17"></a><span class="co"># Plot the differences</span></span>
+<span id="cb128-18"><a href="lab-5.html#cb128-18"></a>  <span class="kw">plot</span>(IDW.out <span class="op">~</span><span class="st"> </span>Precip.spdf<span class="op">$</span>Annual, </span>
+<span id="cb128-19"><a href="lab-5.html#cb128-19"></a>       <span class="dt">asp=</span><span class="dv">1</span>, <span class="dt">xlab=</span><span class="st">&quot;Observed&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;Predicted&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>,</span>
+<span id="cb128-20"><a href="lab-5.html#cb128-20"></a>       <span class="dt">col=</span><span class="kw">rgb</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="fl">0.5</span>),<span class="dt">main=</span><span class="kw">paste</span>(<span class="st">&quot;RMSE:&quot;</span>,<span class="kw">round</span>(RMSE)))</span>
+<span id="cb128-21"><a href="lab-5.html#cb128-21"></a>  <span class="kw">abline</span>(<span class="kw">lm</span>(IDW.out <span class="op">~</span><span class="st"> </span>Precip.spdf<span class="op">$</span>Annual), <span class="dt">col=</span><span class="st">&quot;red&quot;</span>, <span class="dt">lw=</span><span class="dv">2</span>,<span class="dt">lty=</span><span class="dv">2</span>)</span>
+<span id="cb128-22"><a href="lab-5.html#cb128-22"></a>  <span class="kw">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div>
+<ol style="list-style-type: decimal">
+<li>Edit the power and keep reruning the code chunk above until you think you have found the lowest RMSE and the “best” fit. Hint - the power does not need to be an integer. It could be 2.4. Below the code chunk confirm the final power that you chose.</li>
+</ol>
+<p><em>For your show me something new, you are welcome to create a for loop that does this automatically). </em></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Have a look at the IDW map with your final power (by rerunning the earlier code chunk that made the map). Do you agree that this was the best fit?</p></li>
+<li><p>What are the strengths of this interpolation technique and what are the weaknesses?</p></li>
+</ol>
+</div>
+<div id="challenge-8-your-own-idw" class="section level2">
+<h2><span class="header-section-number">6.9</span> Challenge 8: Your own IDW</h2>
+<p>Finally, copy the code in lab challenge 6 into a new code chunk.Now modify it to show create an IDW map with a power of 2 for the elevation data (your Alt column in Precip.spdf)</p>
+<p>Your final plot should be properly captioned (e.g. the legend should be talking about elevation in m) and you will have to change the breaks on the color scale to be something that fits the data.</p>
+<p>If you don’t get this working, don’t panic, simply comment out the code chunk by putting a # in front of each line - then your file will still knit and we can see how far you got.</p>
+</div>
+<div id="challenge-9-show-me-something-new" class="section level2">
+<h2><span class="header-section-number">6.10</span> Challenge 9 Show me something new</h2>
+<p>Please describe what you are trying to achieve.</p>
+<p>For 2.5/5 marks</p>
+<ul>
+<li>3 NEW chapters of a data camp course and include completion screen-shots in your lab script</li>
+<li>You can make some minor changes, for example, you could use this equation editor - <a href="https://www.codecogs.com/latex/eqneditor.php" class="uri">https://www.codecogs.com/latex/eqneditor.php</a> - and this tutorial - <a href="https://www.math.mcgill.ca/yyang/regression/RMarkdown/example.html" class="uri">https://www.math.mcgill.ca/yyang/regression/RMarkdown/example.html</a>, you could include a mathematical equation of your choice in your markdown text.</li>
+<li>You could make some minor changes to some of the code, for example making tmap plots with a new color palette.</li>
+</ul>
+<p><em>OR</em> for 5/5 you can continue to do the classic “something new”, where you need to demonstrates the use of a function or package that was not specifically covered in the handout, lecture, or lab. Remember you actually have to do something new, not repeat what you did in previous weeks</p>
+<p>Some ideas were included throughout the lab, for example
+- You could use ggplot2 to do the Thessian polygons instead: <a href="https://cran.r-project.org/web/packages/ggvoronoi/vignettes/ggvoronoi.html" class="uri">https://cran.r-project.org/web/packages/ggvoronoi/vignettes/ggvoronoi.html</a>
+- You could do a linear regression between annual rainfall and elevation
+- You could explore the tmap and spplot tutorials and see other things you could do.
+- More spatial ideas which might work on our data here: <a href="https://rspatial.org/raster/rosu/Chapter11.html" class="uri">https://rspatial.org/raster/rosu/Chapter11.html</a>
+<a href="https://tlorusso.github.io/geodata_workshop/tmap_package" class="uri">https://tlorusso.github.io/geodata_workshop/tmap_package</a>. For these, you need to make a meaningful change and add a new feature to the map to get 5/5.
+- You could convert the data to ppp and do one aspect of point pattern analysis on the dataset
+- You successfully managed to write R code to create Thiessen polygons on the small dataset in challenge 3.1.</p>
+<p>If you want a larger challenge (also for 5/5 but building your skills)
+- You could look at doing a first order polynomial fit: <a href="https://mgimond.github.io/Spatial/interpolation-in-r.html#st-order-polynomial-fit" class="uri">https://mgimond.github.io/Spatial/interpolation-in-r.html#st-order-polynomial-fit</a>
+- You could explore the akima package for interpolation
+- Applying a for loop to the IDW data (the intermediate R datacamp course helps)
+- There are lots of ideas in the previous lab suggestions.</p>
+</div>
+<div id="lab-5-submission-check" class="section level2">
+<h2><span class="header-section-number">6.11</span> Lab-5 submission check</h2>
+<p>This lab is designed to be relatively short, so that you can start thinking about your final projects and your own spatial data. I will discuss this in future lectures.</p>
+<p>For this lab, here is the mark breakdown:</p>
+<p><strong>HTML FILE SUBMISSION - 10 marks</strong></p>
+<p><strong>RMD CODE SUBMISSION - 10 marks</strong></p>
+<p><strong>WORKING CODE - 10 marks</strong>: Your code works and the output of each code chunk is included in the html file output (e.g. you pressed run-all before you finished)</p>
+<p><strong>EASY TO READ LAB SCRIPT - 10 marks</strong>: You have followed the style guide in section 6.1.</p>
+<p><strong>CHALLENGE 1 - 10 marks</strong>: You answered all the questions, made your histogram/boxplots &amp; converted your data correctly to spatial data</p>
+<p><strong>CHALLENGE 2 - 5 marks</strong>: You thoughtfully used the tmap plots to explore the spatial structure of rainfall over California in different months</p>
+<p><strong>CHALLENGE 3 &amp; 4 - 15 marks</strong>: You uploaded your “by hand” attempt at the polygons and described what they are. You then calculated them in R and described their limitations.</p>
+<p><strong>CHALLENGE 5 - 5 marks</strong>: You explained the process of inverse distance weighting and what was meant by an exact interpolator.</p>
+<p><strong>CHALLENGE 6 - 10 marks</strong>: You answered the questions to explain the spatial features in the data. To get full marks you need to refer back to what IDW is actually doing..</p>
+<p><strong>CHALLENGE 7 &amp; 8 - 10 marks</strong>: You thoughtfully commented on the final power chosen for IDW and the strengths and weaknesses of this technique. You then managed to create an IDW analysis for the elevation column.</p>
+<p><strong>SOMETHING NEW - 5 marks</strong>
+You made a minor change to an existing piece of code (2.5/5) or did 3 data camp chapters.
+OR
+You demonstrated the use of a function or concept that was not specifically covered in the handout, lecture, or lab</p>
+<p>[100 marks total]</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lab-4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="lab-6.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/05-Lab05.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["GEOG364Labs.pdf", "GEOG364Labs.epub"],
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
